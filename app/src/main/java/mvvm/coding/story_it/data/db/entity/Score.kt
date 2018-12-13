@@ -1,15 +1,19 @@
 package mvvm.coding.story_it.data.db.entity
 
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
-@Entity(tableName = "score")
+@Entity(tableName = "scores",
+        foreignKeys = arrayOf(
+            ForeignKey(entity = Player::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("player_id"),
+        onDelete = ForeignKey.CASCADE)
+        ))
 data class Score(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    @Embedded(prefix = "player_")
-    val player: Player,
+    val id: Long,
+    @ColumnInfo(name = "player_id")
+    val playerId: Long,
     val points: Int
 )
 
