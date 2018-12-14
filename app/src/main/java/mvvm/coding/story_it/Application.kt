@@ -1,6 +1,8 @@
 package mvvm.coding.story_it
 
 import android.app.Application
+import androidx.lifecycle.ViewModelProvider
+import mvvm.coding.story_it.base.ViewModelFactory
 import mvvm.coding.story_it.data.db.GameDatabase
 import mvvm.coding.story_it.data.db.repository.GameRepository
 import mvvm.coding.story_it.data.db.repository.GameRepositoryImpl
@@ -18,6 +20,7 @@ class Application : Application(), KodeinAware {
         bind() from singleton { instance<GameDatabase>().playerDao() }
         bind() from singleton { instance<GameDatabase>().scoreDao() }
         bind<GameRepository>() with singleton { GameRepositoryImpl(instance(), instance()) }
+        bind<ViewModelProvider.Factory>() with singleton { ViewModelFactory(instance()) }
     }
 
 }
