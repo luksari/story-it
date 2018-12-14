@@ -1,8 +1,8 @@
-package mvvm.coding.story_it
+package mvvm.coding.story_it.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import mvvm.coding.story_it.data.db.PlayerDao
+import mvvm.coding.story_it.R
 
 class MainActivity : AppCompatActivity() {
 
