@@ -24,15 +24,5 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        viewModel.addPlayerAfter5SecondsToTest()
-
-        viewModel.loadPlayers()
-        // Observes viewModel players livedata
-        viewModel.players.observe(this, Observer {
-            Toast.makeText(this, it.toString(), Toast.LENGTH_LONG).show()
-        })
-
-
-
     }
 }

@@ -11,6 +11,7 @@ import mvvm.coding.story_it.data.db.PlayerDao
 import mvvm.coding.story_it.data.db.ScoreDao
 import mvvm.coding.story_it.data.db.entity.Player
 import mvvm.coding.story_it.data.db.entity.Score
+import mvvm.coding.story_it.data.model.Game
 import java.lang.Exception
 
 
@@ -20,7 +21,6 @@ class GameRepositoryImpl(
     private val playerDao: PlayerDao,
     private val scoreDao: ScoreDao)
     : GameRepository {
-
 
     @WorkerThread
     override fun getPlayers(): List<Player> {
