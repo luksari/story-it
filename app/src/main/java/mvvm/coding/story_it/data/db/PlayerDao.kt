@@ -14,5 +14,5 @@ interface PlayerDao {
     fun addPlayer(player: Player)
 
     @Query("SELECT * FROM players")
-    fun getPlayers(): LiveData<List<Player>>
+    fun getPlayers(): List<Player>
 }

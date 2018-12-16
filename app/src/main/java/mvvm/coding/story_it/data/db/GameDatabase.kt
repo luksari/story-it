@@ -22,7 +22,7 @@ abstract class GameDatabase : RoomDatabase(){
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK){
             instance ?: buildDatabase(context).also { instance = it }
         }
-        private fun buildDatabase(context: Context) =
+        fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
                 GameDatabase::class.java, "game_database.db").build()
 

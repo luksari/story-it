@@ -4,12 +4,20 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'androidx.navigation.safeargs'
+
 apply plugin: "kotlin-kapt"
 
-apply plugin: 'androidx.navigation.safeargs'
+
+kapt {
+    generateStubs = true
+}
 
 
 android {
+    dataBinding {
+        enabled = true
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "mvvm.coding.story_it"
@@ -24,14 +32,12 @@ android {
             }
         }
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-    dataBinding {
-        enabled = true
     }
 }
 
@@ -41,7 +47,8 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
-    implementation "androidx.core:core-ktx:1.0.1"
+    kapt 'com.android.databinding:compiler:3.1.4'
+
 
     // Navigation
     implementation "android.arch.navigation:navigation-fragment:$navigation_version"
@@ -52,12 +59,11 @@ dependencies {
     // Room database
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     kapt "androidx.room:room-compiler:$room_version"
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0"
+
     // optional - Coroutines support for Room
     implementation "androidx.room:room-coroutines:$room_version"
 
@@ -65,12 +71,6 @@ dependencies {
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    kapt 'com.android.databinding:compiler:3.1.4'
-
-    // Kodein
-    implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
-    implementation "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
-
     // Koin
     implementation 'org.koin:koin-android:1.0.2'
     implementation 'org.koin:koin-android-viewmodel:1.0.2'

@@ -16,7 +16,7 @@ val appModule = module {
     single { GameRepositoryImpl(get(), get()) as GameRepository }
 
     single {
-        Room.databaseBuilder(androidApplication(), GameDatabase::class.java, "game-db").build()
+        GameDatabase.buildDatabase(androidApplication())
     }
     single { get<GameDatabase>().scoreDao() }
     single { get<GameDatabase>().playerDao() }
