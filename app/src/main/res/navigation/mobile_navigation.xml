@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/mobile_navigation"
+            app:startDestination="@id/startFragment">
+
+    <fragment android:id="@+id/startFragment" android:name="mvvm.coding.story_it.ui.start.startFragment"
+              android:label="start_fragment" tools:layout="@layout/start_fragment">
+        <action android:id="@+id/action_startFragment_to_preferencesFragment"
+                app:destination="@id/preferencesFragment"/>
+        <action android:id="@+id/action_startFragment_to_leaderboardFragment"
+                app:destination="@id/leaderboardFragment"/>
+    </fragment>
+    <fragment android:id="@+id/preferencesFragment"
+              android:name="mvvm.coding.story_it.ui.preferences.PreferencesFragment"
+              android:label="preferences_fragment" tools:layout="@layout/preferences_fragment">
+        <action android:id="@+id/action_preferencesFragment_to_roundFragment" app:destination="@id/roundFragment"/>
+    </fragment>
+    <fragment android:id="@+id/leaderboardFragment"
+              android:name="mvvm.coding.story_it.ui.leaderboard.LeaderboardFragment"
+              android:label="leaderboard_fragment" tools:layout="@layout/leaderboard_fragment">
+    </fragment>
+    <fragment android:id="@+id/roundFragment" android:name="mvvm.coding.story_it.ui.round.RoundFragment"
+              android:label="round_fragment" tools:layout="@layout/round_fragment">
+        <action android:id="@+id/action_roundFragment_to_summaryFragment" app:destination="@id/summaryFragment"/>
+    </fragment>
+    <fragment android:id="@+id/summaryFragment" android:name="mvvm.coding.story_it.ui.summary.SummaryFragment"
+              android:label="summary_fragment" tools:layout="@layout/summary_fragment">
+        <action android:id="@+id/action_summaryFragment_to_leaderboardFragment"
+                app:destination="@id/leaderboardFragment"/>
+    </fragment>
+</navigation>
