@@ -29,6 +29,15 @@
                             <option name="y" value="21" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_preferencesFragment_to_roundFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -40,6 +49,15 @@
                             <option name="x" value="640" />
                             <option name="y" value="21" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_roundFragment_to_summaryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -55,6 +73,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_startFragment_to_leaderboardFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_startFragment_to_preferencesFragment">
                               <value>
                                 <LayoutPositions />
@@ -73,6 +96,15 @@
                             <option name="x" value="894" />
                             <option name="y" value="24" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_summaryFragment_to_leaderboardFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
