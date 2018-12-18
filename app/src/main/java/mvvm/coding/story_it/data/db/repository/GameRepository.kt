@@ -29,12 +29,5 @@ interface GameRepository {
     @WorkerThread
     fun addScore(score: Score)
 
-    // Functions for GameModel object not stored in DB
-    fun getGameModel() : LiveData<GameModel>
-    fun getGamePreferences() : LiveData<Preferences>
-    fun getGameRounds() : LiveData<List<Round>>
-    fun getCurrentGameRound() : LiveData<Round>
-    fun getGamePlayers() : LiveData<List<Player>>
-    fun getGameCurrentPlayer() : LiveData<Player>
 
 }

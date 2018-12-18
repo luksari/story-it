@@ -35,22 +35,13 @@ class GameRepositoryImpl(
     * */
 
 
-    private lateinit var _gameEntry : Game
-
-    private var _game : MutableLiveData<Game> = MutableLiveData()
-
-    private var _gameModel : MutableLiveData<GameModel> = MutableLiveData()
-    private var _preferences : MutableLiveData<Preferences> = MutableLiveData()
-    private var _rounds: MutableLiveData<List<Round>> = MutableLiveData()
-
     private var _players: MutableLiveData<List<Player>> = MutableLiveData()
 
     /* @TODO Think about implementation of this, (When the * is current??)
     // @TODO Need to add currentProperty in Parent class of every Obj from (Player -> Turn, Turn -> Round, Round -> GameModel) */
 
     //private var _currentTurn : MutableLiveData<Turn> = MutableLiveData()
-    private var _currentPlayer: MutableLiveData<Player> = MutableLiveData()
-    private var _currentRound: MutableLiveData<Round> = MutableLiveData()
+
 
     //region Database Getters Methods
     @WorkerThread
@@ -84,10 +75,6 @@ class GameRepositoryImpl(
         return mutableLiveData
     }
 
-    override fun getGameEntry() : Game {
-        _gameEntry = gameDao.getCurrentGame()
-        return _gameEntry
-    }
 
 
 
@@ -102,42 +89,15 @@ class GameRepositoryImpl(
     override fun addScore(score: Score) {
         scoreDao.addScore(score)
     }
+    @WorkerThread
     override fun upsertGame(game: Game) {
         gameDao.upsert(game)
     }
-
-
-    //endregion
-
-    //region Getters for MutableProperties stored in this repository only
-    override fun getGamePreferences(): LiveData<Preferences> {
-        _preferences.value = _gameModel.value?.preferences
-        return _preferences
+    @WorkerThread
+    override fun getGameEntry(): Game {
+        return gameDao.getCurrentGame()
     }
 
-    override fun getGameRounds(): LiveData<List<Round>> {
-        _rounds.value = _gameModel.value?.rounds
-        return _rounds
-    }
-
-    override fun getCurrentGameRound(): LiveData<Round> {
-        return _currentRound
-    }
-
-    override fun getGamePlayers(): LiveData<List<Player>> {
-        _players.value = _preferences.value?.players
-        return _players
-    }
-
-    override fun getGameCurrentPlayer(): LiveData<Player> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    override fun getGameModel(): LiveData<GameModel> = _gameModel
-    //endregion
-
-    fun setGameModel(){
-       _gameModel.value = Converters.jsonStringToGameModel(_gameEntry.gameStringJson)
-    }
 
 
 }
