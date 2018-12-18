@@ -1,7 +1,9 @@
 package mvvm.coding.story_it.ui.preferences
 
 import androidx.lifecycle.ViewModel;
+import mvvm.coding.story_it.data.db.repository.GameRepository
 
-class PreferencesViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class PreferencesViewModel(private val gameRepository: GameRepository) : ViewModel() {
+
+
 }
