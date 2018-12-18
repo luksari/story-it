@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -34,7 +35,12 @@ class PreferencesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
+        setupListUpdate()
+    }
+    private fun setupListUpdate(){
+        viewModel.players.observe(this, Observer {
+            players-> if(players.isNotEmpty()) viewModel.setAdapter(players)
+        })
     }
 
 }
