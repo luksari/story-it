@@ -42,16 +42,4 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment).navigateUp()
     }
-
-    override fun onBackPressed() {
-        if(Navigation.findNavController(this, R.id.nav_host_fragment)
-                .currentDestination?.id != R.id.startFragment) {
-            navController.navigateUp()
-            return
-        }
-        else
-            super.onBackPressed()
-
-
-    }
 }

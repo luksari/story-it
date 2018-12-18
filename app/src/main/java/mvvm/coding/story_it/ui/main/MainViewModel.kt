@@ -22,6 +22,7 @@ class MainViewModel(private val gameRepository: GameRepository) : ViewModel() {
     private var _players: MutableLiveData<List<Player>> = MutableLiveData<List<Player>>()
     val players : LiveData<List<Player>> get() = _players
 
+
     override fun onCleared() {
         super.onCleared()
         parentJob.cancel()
