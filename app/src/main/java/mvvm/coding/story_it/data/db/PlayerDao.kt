@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import mvvm.coding.story_it.data.db.entity.Player
+import mvvm.coding.story_it.data.db.entity.Score
 
 @Dao
 interface PlayerDao {

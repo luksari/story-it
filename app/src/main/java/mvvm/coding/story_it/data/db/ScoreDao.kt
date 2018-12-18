@@ -14,5 +14,5 @@ interface ScoreDao {
     fun addScore(score: Score)
 
     @Query("SELECT * FROM scores")
-    fun getScores(): LiveData<List<Score>>
+    fun getScores(): List<Score>
 }

@@ -14,6 +14,7 @@ import mvvm.coding.story_it.data.db.entity.Score
 abstract class GameDatabase : RoomDatabase(){
     abstract fun playerDao(): PlayerDao
     abstract fun scoreDao(): ScoreDao
+    abstract fun gameDao(): GameDao
 
     companion object {
         @Volatile private var instance : GameDatabase? = null

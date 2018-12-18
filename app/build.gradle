@@ -70,6 +70,8 @@ dependencies {
     // optional - Coroutines support for Room
     implementation "androidx.room:room-coroutines:$room_version"
 
+    // Gson
+    implementation "com.google.code.gson:gson:2.8.5"
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"

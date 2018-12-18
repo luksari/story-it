@@ -15,13 +15,14 @@ import org.koin.dsl.module.module
 
 val appModule = module {
 
-    single { GameRepositoryImpl(get(), get()) as GameRepository }
+    single { GameRepositoryImpl(get(), get(), get()) as GameRepository }
 
     single {
         GameDatabase.buildDatabase(androidApplication())
     }
     single { get<GameDatabase>().scoreDao() }
     single { get<GameDatabase>().playerDao() }
+    single { get<GameDatabase>().gameDao() }
 
     viewModel { MainViewModel(get()) }
     viewModel { StartViewModel(get()) }
