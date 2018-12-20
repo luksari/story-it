@@ -1,9 +1,6 @@
 package mvvm.coding.story_it.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import mvvm.coding.story_it.data.db.entity.CURRENT_GAME_ID
 import mvvm.coding.story_it.data.db.entity.Game
 
@@ -14,5 +11,6 @@ interface GameDao {
 
     @Query("SELECT * FROM games WHERE id = $CURRENT_GAME_ID")
     fun getCurrentGame() : Game
+
 
 }

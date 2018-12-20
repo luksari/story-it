@@ -21,7 +21,6 @@ class startFragment : Fragment() {
     }
 
     private val viewModel: StartViewModel by viewModel()
-    lateinit var action : startFragmentDirections
 
 
     override fun onCreateView(

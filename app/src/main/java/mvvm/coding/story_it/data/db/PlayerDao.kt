@@ -1,10 +1,7 @@
 package mvvm.coding.story_it.data.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import mvvm.coding.story_it.data.db.entity.Player
 import mvvm.coding.story_it.data.db.entity.Score
 
@@ -16,4 +13,7 @@ interface PlayerDao {
 
     @Query("SELECT * FROM players")
     fun getPlayers(): List<Player>
+
+    @Query("DELETE FROM players")
+    fun deletePlayers()
 }

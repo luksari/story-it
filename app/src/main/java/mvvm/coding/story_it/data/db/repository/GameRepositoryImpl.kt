@@ -2,23 +2,13 @@ package mvvm.coding.story_it.data.db.repository
 
 import android.util.Log
 import androidx.annotation.WorkerThread
-
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import mvvm.coding.story_it.base.Converters
 import mvvm.coding.story_it.data.db.GameDao
 import mvvm.coding.story_it.data.db.PlayerDao
 import mvvm.coding.story_it.data.db.ScoreDao
 import mvvm.coding.story_it.data.db.entity.Game
 import mvvm.coding.story_it.data.db.entity.Player
 import mvvm.coding.story_it.data.db.entity.Score
-import mvvm.coding.story_it.data.model.GameModel
-import mvvm.coding.story_it.data.model.Preferences
-import mvvm.coding.story_it.data.model.Round
 import java.lang.Exception
-
-
-
 
 class GameRepositoryImpl(
     private val playerDao: PlayerDao,
@@ -35,7 +25,6 @@ class GameRepositoryImpl(
     * */
 
 
-    private var _players: MutableLiveData<List<Player>> = MutableLiveData()
 
     /* @TODO Think about implementation of this, (When the * is current??)
     // @TODO Need to add currentProperty in Parent class of every Obj from (Player -> Turn, Turn -> Round, Round -> GameModel) */
@@ -44,35 +33,36 @@ class GameRepositoryImpl(
 
 
     //region Database Getters Methods
-    @WorkerThread
+
     override fun getPlayers(): List<Player> {
-           return playerDao.getPlayers()
+        return playerDao.getPlayers()
     }
 
-    override fun getPlayerOf(id: Long): LiveData<Player> {
-        val mutableLiveData = MutableLiveData<Player>()
-        val player: Player?
+    override fun getPlayerOf(id: Long): Player{
+        var player: Player? = null
         try {
             player = playerDao.getPlayers().single { player -> player.id == id  }
-            mutableLiveData.value = player
         }catch (ex: Exception){
             Log.e("REPOSITORY", ex.localizedMessage)
         }
-        return mutableLiveData
+        return player!!
     }
     @WorkerThread
     override fun getScores(): List<Score> = scoreDao.getScores()
 
-    override fun getScoreOf(id: Long): LiveData<Score> {
-        val mutableLiveData = MutableLiveData<Score>()
-        val score: Score?
+    @WorkerThread
+    override fun deletePlayers() {
+        playerDao.deletePlayers()
+    }
+
+    override fun getScoreOf(id: Long): Score {
+        var score: Score? = null
         try {
             score = scoreDao.getScores().single { score -> score.playerId == id }
-            mutableLiveData.value = score
         }catch (ex: Exception){
             Log.e("REPOSITORY", ex.localizedMessage)
         }
-        return mutableLiveData
+        return score!!
     }
 
 

@@ -15,6 +15,7 @@
               android:name="mvvm.coding.story_it.ui.preferences.PreferencesFragment"
               android:label="preferences_fragment" tools:layout="@layout/preferences_fragment">
         <action android:id="@+id/action_preferencesFragment_to_roundFragment" app:destination="@id/roundFragment"/>
+        <action android:id="@+id/action_preferencesFragment_to_startFragment" app:destination="@id/startFragment"/>
     </fragment>
     <fragment android:id="@+id/leaderboardFragment"
               android:name="mvvm.coding.story_it.ui.leaderboard.LeaderboardFragment"

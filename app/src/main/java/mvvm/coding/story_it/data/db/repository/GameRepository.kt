@@ -5,9 +5,6 @@ import androidx.lifecycle.LiveData
 import mvvm.coding.story_it.data.db.entity.Game
 import mvvm.coding.story_it.data.db.entity.Player
 import mvvm.coding.story_it.data.db.entity.Score
-import mvvm.coding.story_it.data.model.GameModel
-import mvvm.coding.story_it.data.model.Preferences
-import mvvm.coding.story_it.data.model.Round
 
 interface GameRepository {
 
@@ -19,15 +16,17 @@ interface GameRepository {
     @WorkerThread
     fun getPlayers() : List<Player>
 
-    fun getPlayerOf(id: Long) : LiveData<Player>
+    fun getPlayerOf(id: Long) : Player
     @WorkerThread
-    fun getScores() :List<Score>
+    fun getScores():List<Score>
 
-    fun getScoreOf(id: Long) : LiveData<Score>
+    fun getScoreOf(id: Long) : Score
     @WorkerThread
     fun addPlayer(player: Player)
     @WorkerThread
     fun addScore(score: Score)
+    @WorkerThread
+    fun deletePlayers()
 
 
 }
