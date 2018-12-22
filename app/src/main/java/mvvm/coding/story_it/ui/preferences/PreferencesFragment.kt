@@ -46,12 +46,19 @@ class PreferencesFragment : Fragment() {
         viewModel.players.observe(this, Observer {
             players-> if(players.isNotEmpty())
             viewModel.setAdapter(players)
+            viewModel.validateFragment()
 
         })
     }
     private fun setupErrorListeners() {
-        viewModel.uiPlayerListError.observe(this, Observer {
-            playerName.error = it
+        viewModel.numberOfRounds.observe(this, Observer {
+            viewModel.validateFragment()
+        })
+        viewModel.numberOfCharacters.observe(this, Observer {
+            viewModel.validateFragment()
+        })
+        viewModel.numberOfWords.observe(this, Observer {
+            viewModel.validateFragment()
         })
         viewModel.isPossibleToStartGame.observe(this, Observer {
             start_game_btn.isEnabled = it
