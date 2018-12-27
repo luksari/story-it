@@ -40,16 +40,20 @@ class PreferencesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setupListUpdate()
         setupErrorListeners()
-        back_btn.setOnClickListener { findNavController() }
+        back_btn.setOnClickListener { findNavController().navigate(PreferencesFragmentDirections.actionPreferencesFragmentToStartFragment()) }
+        start_game_btn.setOnClickListener{
+            viewModel.addGame()
+            findNavController().navigate(PreferencesFragmentDirections.actionPreferencesFragmentToRoundFragment())
+        }
     }
     private fun setupListUpdate(){
         viewModel.players.observe(this, Observer {
             players-> if(players.isNotEmpty())
             viewModel.setAdapter(players)
             viewModel.validateFragment()
-
         })
     }
+
     private fun setupErrorListeners() {
         viewModel.numberOfRounds.observe(this, Observer {
             viewModel.validateFragment()

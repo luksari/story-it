@@ -63,6 +63,9 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
     fun getAdapter() = adapter
     //endregion
 
+    fun refresh(){
+        validateFragment()
+    }
     // Adds player to DB on IO thread, then adds it to playerList that is value of MutableList to watch for updates
     fun addPlayer(){
         val name =playerName.value ?: "Player"
@@ -72,7 +75,6 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
             }
             Coroutines.ioThenMain( {gameRepository.addPlayer(player!!)}) {
                 playerList.add(player!!)
-                Log.d("PLAYERS_ADD", playerList.toString())
                 _players.value = playerList
             }
         }
@@ -104,7 +106,7 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
     fun getPlayerOfId(id: Int) = _players.value?.get(id)
 
     fun clearPreferences(){
-        _players.value?.forEach { player-> player.isChosen.value = false }
+        //_players.value?.forEach { player-> player.isChosen.value = false }
         numberOfRounds.value = 4
         numberOfCharacters.value = 140
         numberOfWords.value = 2
@@ -133,7 +135,6 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
             Coroutines.io {
                 gameRepository.upsertGame(game)
             }
-            Log.d("GAME", gameModel.value.toString())
         }
 
     }
@@ -142,7 +143,6 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
              playerList = gameRepository.getPlayers().toMutableList()
          }) {
              playerList.forEach { player-> player.isChosen.value = false }
-             Log.d("PLAYERS", playerList.toString())
              _players.value = playerList
              observePlayers()
          }
@@ -151,7 +151,6 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
         _players.observeForever{
             val chosenList = it.filter { player -> player.isChosen.value!!  }
             _chosenPlayers.value = chosenList
-            Log.d("CHOSEN", chosenList.toString())
         }
     }
 

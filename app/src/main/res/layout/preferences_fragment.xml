@@ -27,7 +27,7 @@
                    app:layout_constraintTop_toTopOf="parent"
                    app:layout_constraintLeft_toLeftOf="parent"
                    app:layout_constraintRight_toLeftOf="@id/playerName"
-                   android:text="Players" app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+                   android:text="@string/players" app:layout_constraintHorizontal_chainStyle="spread_inside"/>
            <EditText
                    android:id="@+id/playerName"
                    android:layout_width="0dp"
@@ -35,7 +35,7 @@
                    android:layout_height="0dp"
                    app:layout_constraintLeft_toRightOf="@id/players_textview"
                    app:layout_constraintTop_toTopOf="parent"
-                   android:hint="Your name..."
+                   android:hint="@string/your_name"
                    playerName="@{viewModel.playerName}"
                    android:text="@={viewModel.playerName}"
                    app:layout_constraintBottom_toTopOf="@id/new_player_btn"
@@ -55,24 +55,34 @@
                    android:id="@+id/new_player_btn"
                    android:layout_width="wrap_content"
                    android:layout_height="0dp"
-                   android:text="+"
+                   android:text="ADD"
                     android:background="@color/colorPrimary"
                    app:layout_constraintLeft_toRightOf="@id/players_scrollview"
-                   app:layout_constraintRight_toRightOf="@id/remove_player_btn"
+                   app:layout_constraintRight_toRightOf="@id/refresh_player_btn"
                    app:layout_constraintTop_toBottomOf="@id/playerName"
                    android:onClick="@{()->viewModel.addPlayer()}"
 />
 
            <Button
-                   android:id="@+id/remove_player_btn"
+                   android:id="@+id/refresh_player_btn"
                    android:layout_width="wrap_content"
                    android:layout_height="0dp"
-                   android:text="-"
+                   android:text="Refresh"
                    android:layout_marginStart="5dp"
+                   android:onClick="@{()->viewModel.refresh()}"
                    android:background="@android:color/holo_red_dark"
                    app:layout_constraintLeft_toRightOf="@id/new_player_btn"
                    app:layout_constraintRight_toRightOf="parent"
                    app:layout_constraintTop_toBottomOf="@id/playerName"/>
+           <TextView
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:textAlignment="center"
+                   app:layout_constraintTop_toBottomOf="@id/refresh_player_btn"
+                   app:layout_constraintRight_toRightOf="parent"
+                   app:layout_constraintLeft_toRightOf="@id/players_scrollview"
+                   android:text="Press refresh button when you have already chosen players!"
+           />
        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -132,7 +142,7 @@
                     android:scrollHorizontally="false"
                     android:labelFor="@id/wordsNumber"
                     app:layout_constraintLeft_toRightOf="@id/textView3"
-                    android:text="Number of words shown: "/>
+                    android:text="@string/number_of_words_shown"/>
             <EditText
                     android:id="@+id/roundNumber"
                     android:layout_width="0dp"
@@ -186,7 +196,7 @@
                 android:layout_width="0dp"
                 android:padding="10dp"
                 android:layout_height="wrap_content"
-                android:text="Back"
+                android:text="@string/back"
                 android:id="@+id/back_btn"
                 app:layout_constraintRight_toLeftOf="@id/clear_preferences_btn"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -196,7 +206,7 @@
         <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Clear"
+                android:text="@string/clear"
                 android:padding="10dp"
                 android:id="@+id/clear_preferences_btn"
                 app:layout_constraintLeft_toRightOf="@id/back_btn"
@@ -210,7 +220,7 @@
         <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Start Game"
+                android:text="@string/start_game"
                 android:padding="10dp"
                 android:enabled="@{viewModel.isPossibleToStartGame()}"
                 android:id="@+id/start_game_btn"
@@ -219,7 +229,7 @@
                 app:layout_constraintTop_toBottomOf="@id/preferences_labels_container"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="25dp"
-                android:onClick="@{() -> viewModel.addGame()}"
+
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

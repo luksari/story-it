@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">story-it</string>
+    <string name="your_name">Your name...</string>
+    <string name="players">Players</string>
+    <string name="number_of_words_shown">Number of words shown:</string>
+    <string name="back">Back</string>
+    <string name="clear">Clear</string>
+    <string name="start_game">Start Game</string>
 </resources>
