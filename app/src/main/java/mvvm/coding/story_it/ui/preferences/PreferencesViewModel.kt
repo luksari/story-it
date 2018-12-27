@@ -67,11 +67,12 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
     fun addPlayer(){
         val name =playerName.value ?: "Player"
         if(!isPlayerInList(name)){
-            player = Player(playerList.size.toLong(), name).also {
+            player = Player(name).also {
                 it.isChosen.value=true
             }
             Coroutines.ioThenMain( {gameRepository.addPlayer(player!!)}) {
                 playerList.add(player!!)
+                Log.d("PLAYERS_ADD", playerList.toString())
                 _players.value = playerList
             }
         }
@@ -141,6 +142,7 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
              playerList = gameRepository.getPlayers().toMutableList()
          }) {
              playerList.forEach { player-> player.isChosen.value = false }
+             Log.d("PLAYERS", playerList.toString())
              _players.value = playerList
              observePlayers()
          }
