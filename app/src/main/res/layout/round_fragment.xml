@@ -18,9 +18,10 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text=""
+                android:text="@{viewModel.roundName}"
                 tools:text="Round 1"
                 android:textSize="48sp"
+
         />
         <TextView
                 android:id="@+id/current_player_textview"
@@ -30,7 +31,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text=""
+                android:text="@{viewModel.currentPlayerName}"
                 tools:text="Jacek"
                 android:layout_marginTop="10dp"
                 android:textSize="24sp"
@@ -40,6 +41,7 @@
                   android:id="@+id/story_part_textview"
                   app:layout_constraintTop_toBottomOf="@id/current_player_textview"
                   android:layout_marginTop="25dp"
+                  android:text="@{viewModel.previousTurnStoryPart}"
                   tools:text="One time..."
                   app:layout_constraintLeft_toLeftOf="parent"
                   app:layout_constraintRight_toRightOf="parent"
@@ -53,6 +55,7 @@
                 app:layout_constraintTop_toBottomOf="@id/story_part_textview"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="25dp"
+                android:text="@={viewModel.currentTurnStoryPart}"
                 app:layout_constraintRight_toRightOf="parent"
 
         />
@@ -64,6 +67,7 @@
                 app:layout_constraintTop_toBottomOf="@id/word_edittext"
                 android:layout_marginTop="25dp"
                 android:text="Next player"
+                android:onClick="@{()-> viewModel.nextPlayer()}"
         />
 
 
