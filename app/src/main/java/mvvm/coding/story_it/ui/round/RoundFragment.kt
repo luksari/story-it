@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 
 import mvvm.coding.story_it.R
 import mvvm.coding.story_it.databinding.RoundFragmentBinding
@@ -33,6 +34,11 @@ class RoundFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel.hasRoundEnded.observe(this, Observer {
+            if(it) {
+
+            }
+        })
 
     }
 

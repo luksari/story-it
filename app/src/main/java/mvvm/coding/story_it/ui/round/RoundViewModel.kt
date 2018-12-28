@@ -101,9 +101,19 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
         _currentTurn.value?.words = currentWords
         gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].turns.toMutableList()[turnsIterator.value!!.minus(1)] = _currentTurn.value!!
 
+        upsertGame()
+
         turnsIterator.value = turnsIterator.value!!.plus(1)
 
 
+    }
+
+    private fun upsertGame(){
+        val gameJson = Converters.gameModelToJson(gameModel.value!!)
+        val game = Game(gameJson)
+        Coroutines.io{
+            gameRepository.upsertGame(game)
+        }
     }
 
 }
