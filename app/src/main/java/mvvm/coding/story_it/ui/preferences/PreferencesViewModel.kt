@@ -124,6 +124,9 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
         // GameModel stands for game state stored in app memory, it should be upserted on every Fragment/Activity onDestroy,
         // and loaded on the every Activity/Fragment onCreate
         if(preferences != null){
+            for(i in 1..4){
+                rounds.toMutableList().add(Round(i, listOf(), listOf()))
+            }
             _gameModel.value = GameModel(rounds,preferences)
         }
         else

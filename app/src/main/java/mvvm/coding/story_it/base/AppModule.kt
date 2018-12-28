@@ -7,6 +7,7 @@ import mvvm.coding.story_it.data.db.repository.GameRepository
 import mvvm.coding.story_it.data.db.repository.GameRepositoryImpl
 import mvvm.coding.story_it.ui.main.MainViewModel
 import mvvm.coding.story_it.ui.preferences.PreferencesViewModel
+import mvvm.coding.story_it.ui.round.RoundViewModel
 import mvvm.coding.story_it.ui.start.StartViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.ext.koin.viewModel
@@ -27,6 +28,7 @@ val appModule = module {
     viewModel { MainViewModel(get()) }
     viewModel { StartViewModel(get()) }
     viewModel { PreferencesViewModel(get()) }
+    viewModel { RoundViewModel(get()) }
 
 
 
