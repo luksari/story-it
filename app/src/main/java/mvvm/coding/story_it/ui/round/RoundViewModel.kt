@@ -45,12 +45,12 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
     }
     init {
         getGameDataFromDB()
-        initializeDataToBeShown()
     }
+
     private fun initializeDataToBeShown(){
         _currentRound.value = _gameModel.value!!.rounds.first()
         _roundName.value = "Round ${_currentRound.value!!.id}"
-        
+
     }
 
 

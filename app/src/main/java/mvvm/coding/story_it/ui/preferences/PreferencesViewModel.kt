@@ -3,7 +3,7 @@ package mvvm.coding.story_it.ui.preferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel
 import mvvm.coding.story_it.R
 import mvvm.coding.story_it.base.Converters
 import mvvm.coding.story_it.base.Coroutines
@@ -13,6 +13,7 @@ import mvvm.coding.story_it.data.db.repository.GameRepository
 import mvvm.coding.story_it.data.model.GameModel
 import mvvm.coding.story_it.data.model.Preferences
 import mvvm.coding.story_it.data.model.Round
+import mvvm.coding.story_it.data.model.Turn
 
 class PreferencesViewModel(private val gameRepository: GameRepository) : ViewModel() {
 
@@ -34,6 +35,8 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
     val players : LiveData<List<Player>>
         get() = _players
     private val _chosenPlayers : MutableLiveData<List<Player>> = MutableLiveData()
+    val chosenPlayers : LiveData<List<Player>>
+        get() = _chosenPlayers
 
     private var rounds : List<Round> = listOf()
     var player : Player? = null
@@ -50,6 +53,7 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
 
         isPossibleToStartGame.value = true
         numberOfWords.value = 2
+        isRandomOrder.value = false
         numberOfCharacters.value = 140
         numberOfRounds.value = 4
 
@@ -125,9 +129,36 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
         // and loaded on the every Activity/Fragment onCreate
         if(preferences != null){
             val tempRounds = mutableListOf<Round>()
-            for(i in 0..numberOfRounds.value!!){
-                tempRounds.add(Round(i+1, listOf(), listOf()))
+            var tempTurns = mutableListOf<Turn>()
+            var tempPlayers = chosenPlayers.value!!
+
+
+            if(!isRandomOrder.value!!) {
+                for (i in 0 until _chosenPlayers.value!!.size){
+                    val player = tempPlayers.first()
+                    tempPlayers = tempPlayers.filter { it -> it != player }
+                    tempTurns.add(Turn(i+1, player, listOf()))
+                }
+                for(i in 0..numberOfRounds.value!!){
+                    tempRounds.add(Round(i+1, listOf(), tempTurns))
+                }
             }
+
+            else if(isRandomOrder.value!!) {
+                for(i in 0..numberOfRounds.value!!){
+                    for (j in 0 until _chosenPlayers.value!!.size){
+                        val player = tempPlayers.random()
+                        tempPlayers = tempPlayers.filter { it -> it != player }
+                        tempTurns.add(Turn(j+1, player, listOf()))
+                    }
+                    tempPlayers = _chosenPlayers.value!!
+                    tempRounds.add(Round(i+1, listOf(), tempTurns))
+                }
+
+            }
+
+
+
             rounds = tempRounds
             _gameModel.value = GameModel(rounds,preferences)
         }
