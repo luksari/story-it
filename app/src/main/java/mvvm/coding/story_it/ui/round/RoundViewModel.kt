@@ -14,8 +14,21 @@ import mvvm.coding.story_it.data.model.Round
 
 class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
 
-    private lateinit var round: Round
-    private val roundList : MutableList<Round> = mutableListOf()
+    private val _roundName : MutableLiveData<String> = MutableLiveData()
+    val rondName : LiveData<String>
+        get() = _roundName
+
+    private val _turnStoryPart : MutableLiveData<String> = MutableLiveData()
+    val storyPart : LiveData<String>
+        get() = _turnStoryPart
+
+    private val _currentPlayerName : MutableLiveData<String> = MutableLiveData()
+    val currentPlayerName : LiveData<String>
+        get() = _currentPlayerName
+
+    private val _currentRound : MutableLiveData<Round> = MutableLiveData()
+    val currentRound : LiveData<Round>
+        get() = _currentRound
 
     private lateinit var gameEntry : Game
     private val _gameModel : MutableLiveData<GameModel> = MutableLiveData()
@@ -32,7 +45,12 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
     }
     init {
         getGameDataFromDB()
-
+        initializeDataToBeShown()
+    }
+    private fun initializeDataToBeShown(){
+        _currentRound.value = _gameModel.value!!.rounds.first()
+        _roundName.value = "Round ${_currentRound.value!!.id}"
+        
     }
 
 

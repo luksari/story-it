@@ -35,7 +35,7 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
         get() = _players
     private val _chosenPlayers : MutableLiveData<List<Player>> = MutableLiveData()
 
-    private val rounds : List<Round> = listOf()
+    private var rounds : List<Round> = listOf()
     var player : Player? = null
 
     private val _preferences = MutableLiveData<Preferences>()
@@ -124,9 +124,11 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
         // GameModel stands for game state stored in app memory, it should be upserted on every Fragment/Activity onDestroy,
         // and loaded on the every Activity/Fragment onCreate
         if(preferences != null){
-            for(i in 1..4){
-                rounds.toMutableList().add(Round(i, listOf(), listOf()))
+            val tempRounds = mutableListOf<Round>()
+            for(i in 0..numberOfRounds.value!!){
+                tempRounds.add(Round(i+1, listOf(), listOf()))
             }
+            rounds = tempRounds
             _gameModel.value = GameModel(rounds,preferences)
         }
         else
