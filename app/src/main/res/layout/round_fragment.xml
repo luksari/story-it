@@ -1,14 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.round.RoundFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
 
-    <TextView
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Hello"/>
+            tools:context=".ui.round.RoundFragment"
+            android:padding="20dp">
 
-</FrameLayout>
+        <TextView
+                android:id="@+id/current_round_textview"
+                android:layout_width="match_parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text=""
+                tools:text="Round 1"
+                android:textSize="48sp"
+        />
+        <TextView
+                android:id="@+id/current_player_textview"
+                android:layout_width="match_parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/current_round_textview"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text=""
+                tools:text="Jacek"
+                android:layout_marginTop="10dp"
+                android:textSize="24sp"
+        />
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/story_part_textview"
+                  app:layout_constraintTop_toBottomOf="@id/current_player_textview"
+                  android:layout_marginTop="25dp"
+                  tools:text="One time..."
+                  app:layout_constraintLeft_toLeftOf="parent"
+                  app:layout_constraintRight_toRightOf="parent"
+                  android:textAlignment="center"
+        />
+        <EditText
+                android:id="@+id/word_edittext"
+                android:hint="Your story part..."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/story_part_textview"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="25dp"
+                app:layout_constraintRight_toRightOf="parent"
+
+        />
+        <Button android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_turn_btn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/word_edittext"
+                android:layout_marginTop="25dp"
+                android:text="Next player"
+        />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
