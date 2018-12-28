@@ -65,6 +65,7 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
         getGameDataFromDB()
         turnsIterator.value = 1
         roundsIterator.value = 1
+        _hasRoundEnded.value = false
     }
 
     private fun initializeDataToBeShown(){
@@ -78,8 +79,7 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
             if(it > _currentRound.value!!.turns.size) {
                 roundsIterator.value = roundsIterator.value!!.plus(1)
                 turnsIterator.value = 1
-                // @TODO Go to round sunmary
-
+                _hasRoundEnded.value = true
             }
             else{
                 _currentTurn.value = _currentRound.value!!.turns.single { turn -> turn.id == it }
@@ -98,10 +98,12 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
         for (i in 0 until tempStringArray.size){
             currentWords.add(Word(i+1, tempStringArray[i], _currentTurn.value!!.player))
         }
-        Log.d("GAME", "ROUND: ${roundsIterator.value}, TURN: ${turnsIterator.value}")
-        Log.d("GAME", _gameModel.value!!.rounds.toString())
+        _currentTurn.value?.words = currentWords
+        gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].turns.toMutableList()[turnsIterator.value!!.minus(1)] = _currentTurn.value!!
 
         turnsIterator.value = turnsIterator.value!!.plus(1)
+
+
     }
 
 }
