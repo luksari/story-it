@@ -109,6 +109,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_summaryFragment_to_roundFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
