@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.databinding.DataBindingUtil
 import mvvm.coding.story_it.R
+import mvvm.coding.story_it.databinding.SummaryFragmentBinding
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SummaryFragment : Fragment() {
 
@@ -15,19 +17,21 @@ class SummaryFragment : Fragment() {
         fun newInstance() = SummaryFragment()
     }
 
-    private lateinit var viewModel: SummaryViewModel
+    private val viewModel: SummaryViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.summary_fragment, container, false)
+        val binding = DataBindingUtil.inflate<SummaryFragmentBinding>(inflater,R.layout.summary_fragment,container, false)
+        binding.viewModel = viewModel
+        binding.setLifecycleOwner(this)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SummaryViewModel::class.java)
-        // TODO: Use the ViewModel
+
     }
 
 }
