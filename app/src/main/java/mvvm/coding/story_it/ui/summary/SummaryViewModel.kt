@@ -31,6 +31,8 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
     private val _currentVoter = MutableLiveData<Player>()
     val currentVoter : LiveData<Player>
         get() = _currentVoter
+    private val votersList = MutableLiveData<List<Player>>()
+    private val votersIterator : MutableLiveData<Int> = MutableLiveData()
 
     private val _currentRound = MutableLiveData<Round>()
     val currentRound : LiveData<Round>
@@ -44,12 +46,28 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         get() = _storyString
 
 
+    init {
+        getGameDataFromDB()
+        votersIterator.value = 1
+
+    }
+    private fun observeIterator(){
+        votersIterator.observeForever {
+            if(it <= votersList.value!!.size){
+                _currentVoter.value = votersList.value!![it-1]
+                _voterName.value = "Voter: ${_currentVoter.value!!.name}"
+            }
+
+        }
+    }
+
     private fun getGameDataFromDB(){
         Coroutines.ioThenMain({
             gameEntry = gameRepository.getGameEntry()
         }){
             _gameModel.value = Converters.jsonStringToGameModel(gameEntry.gameStringJson)
             initializeDataToBeShown()
+            observeIterator()
         }
     }
 
@@ -57,20 +75,18 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         _currentRound.value = _gameModel.value!!.rounds.last { round -> round.wasCurrent }
         _summaryName.value = "Summary of Round ${_currentRound.value!!.id}"
         _story.value = _currentRound.value!!.turns.last().words
-
         _storyString.value = story.value!!.joinToString(" ") { word -> word.text }
-        val players = getPlayers()
-        _currentVoter.value = players.first()
+        votersList.value = getPlayers()
+        _currentVoter.value = votersList.value!![votersIterator.value!!.minus(1)]
         _voterName.value = "Voter: ${_currentVoter.value!!.name}"
-    }
-
-    init {
-        getGameDataFromDB()
     }
     private fun getPlayers() : List<Player>{
         var players : List<Player>
         players = _gameModel.value!!.rounds[0].turns.map { turn -> turn.player }
         return players
+    }
+    fun vote(){
+        votersIterator.value = votersIterator.value!!.plus(1)
     }
 
 }
