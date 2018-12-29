@@ -137,27 +137,30 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
                 for (i in 0 until _chosenPlayers.value!!.size){
                     val player = tempPlayers.first()
                     tempPlayers = tempPlayers.filter { it -> it != player }
-                    tempTurns.add(Turn(i+1, player, listOf()))
+                    val turn = Turn(i+1, player, listOf())
+                    tempTurns.add(turn)
                 }
-                for(i in 0..numberOfRounds.value!!){
-                    tempRounds.add(Round(i+1, listOf(), tempTurns))
+                for(i in 0 until numberOfRounds.value!!){
+                    val round = Round(i+1, listOf(), tempTurns)
+                    tempRounds.add(round)
                 }
             }
 
             else if(isRandomOrder.value!!) {
-                for(i in 0..numberOfRounds.value!!){
+                for(i in 0 until numberOfRounds.value!!){
+                    tempTurns.clear()
                     for (j in 0 until _chosenPlayers.value!!.size){
                         val player = tempPlayers.random()
                         tempPlayers = tempPlayers.filter { it -> it != player }
-                        tempTurns.add(Turn(j+1, player, listOf()))
+                        val turn = Turn(j+1, player, listOf())
+                        tempTurns.add(turn)
                     }
+                    val round = Round(i+1, listOf(), tempTurns)
+                    tempRounds.add(round)
                     tempPlayers = _chosenPlayers.value!!
-                    tempRounds.add(Round(i+1, listOf(), tempTurns))
                 }
 
             }
-
-
 
             rounds = tempRounds
             _gameModel.value = GameModel(rounds,preferences)
