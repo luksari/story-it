@@ -19,6 +19,7 @@
                   tools:text="Summary name"
                   android:textSize="36sp"
                   android:textAlignment="center"
+                  android:text="@{viewModel.summaryName}"
         />
         <TextView
                 android:id="@+id/story_textview"
@@ -26,8 +27,10 @@
                   android:layout_height="wrap_content"
                   app:layout_constraintTop_toBottomOf="@id/summary_name_textview"
                   tools:text="It is part of written story"
+                android:text="@{viewModel.storyString}"
                   android:padding="20dp"
                   android:layout_marginTop="30dp"
+
 
         />
         <TextView android:id="@+id/voter_name_textview"
@@ -40,6 +43,7 @@
                   android:layout_marginTop="30dp"
                   android:textSize="36sp"
                   android:textAlignment="center"
+                  android:text="@{viewModel.voterName}"
         />
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/options_recyclerview"

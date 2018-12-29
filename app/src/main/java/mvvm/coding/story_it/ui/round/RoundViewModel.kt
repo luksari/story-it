@@ -66,6 +66,7 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
         turnsIterator.value = 1
         roundsIterator.value = 1
         _hasRoundEnded.value = false
+
     }
 
     private fun initializeDataToBeShown(){
@@ -109,7 +110,8 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
     }
 
     private fun upsertGame(){
-        val gameJson = Converters.gameModelToJson(gameModel.value!!)
+        _gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].wasCurrent = true
+        val gameJson = Converters.gameModelToJson(_gameModel.value!!)
         val game = Game(gameJson)
         Coroutines.io{
             gameRepository.upsertGame(game)

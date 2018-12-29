@@ -1,5 +1,6 @@
 package mvvm.coding.story_it.ui.summary
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
@@ -10,6 +11,7 @@ import mvvm.coding.story_it.data.db.entity.Player
 import mvvm.coding.story_it.data.db.repository.GameRepository
 import mvvm.coding.story_it.data.model.GameModel
 import mvvm.coding.story_it.data.model.Round
+import mvvm.coding.story_it.data.model.Word
 
 class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel() {
 
@@ -34,6 +36,13 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
     val currentRound : LiveData<Round>
         get() = _currentRound
 
+    private val _story = MutableLiveData<List<Word>>()
+    val story : LiveData<List<Word>>
+        get() = _story
+    private val _storyString = MutableLiveData<String>()
+    val storyString : LiveData<String>
+        get() = _storyString
+
 
     private fun getGameDataFromDB(){
         Coroutines.ioThenMain({
@@ -45,11 +54,23 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
     }
 
     private fun initializeDataToBeShown() {
-        _currentRound
+        _currentRound.value = _gameModel.value!!.rounds.last { round -> round.wasCurrent }
+        _summaryName.value = "Summary of Round ${_currentRound.value!!.id}"
+        _story.value = _currentRound.value!!.turns.last().words
+
+        _storyString.value = story.value!!.joinToString(" ") { word -> word.text }
+        val players = getPlayers()
+        _currentVoter.value = players.first()
+        _voterName.value = "Voter: ${_currentVoter.value!!.name}"
     }
 
     init {
         getGameDataFromDB()
+    }
+    private fun getPlayers() : List<Player>{
+        var players : List<Player>
+        players = _gameModel.value!!.rounds[0].turns.map { turn -> turn.player }
+        return players
     }
 
 }
