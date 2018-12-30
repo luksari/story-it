@@ -16,7 +16,5 @@ data class Player(
     var color: MutableLiveData<Int> = MutableLiveData()
     @Ignore
     var isChosen : MutableLiveData<Boolean> = MutableLiveData()
-    @Ignore
-    var points : MutableLiveData<Int> = MutableLiveData()
 
 }
