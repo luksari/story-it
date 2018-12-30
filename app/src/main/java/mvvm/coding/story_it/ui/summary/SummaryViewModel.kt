@@ -132,19 +132,20 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
     fun vote(){
         var score: Score
         var prevScore: Score? = null
+        val chosenPlayer = listOfPlayersToVoteFor.value!!.single { player -> player.isChosen.value!! }
+
         Coroutines.ioThenMain({
-            prevScore = gameRepository.getScoreOf(currentVoter.value!!.id!!)
+            prevScore = gameRepository.getScoreOf(chosenPlayer.id!!)
         }) {
             score = if (prevScore != null)
                 Score(prevScore!!.id_s, prevScore!!.playerId, prevScore!!.points + 10)
             else
-                Score(_currentVoter.value!!.id, _currentVoter.value!!.id!!, 0)
+                Score(chosenPlayer.id, chosenPlayer.id!!, 10)
 
             Coroutines.ioThenMain({
                 gameRepository.addScore(score)
             }) {
                 votersIterator.value = votersIterator.value!!.plus(1)
-
             }
         }
     }

@@ -15,8 +15,8 @@
                   android:textSize="24sp" android:text="@{viewModel.getOption(position).name}"
         />
         <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:id="@+id/vote_checkbox" android:checked="@{viewModel.getOption(position).isChosen()}"
-        android:layout_marginStart="20dp"/>
+                  android:id="@+id/vote_checkbox" android:checked="@={viewModel.getOption(position).isChosen}"
+                  android:layout_marginStart="20dp"/>
 
 
 
