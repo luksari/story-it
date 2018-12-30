@@ -34,7 +34,10 @@ class SummaryFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.summaryHasEnded.observe(this, Observer{
-            if(it) findNavController().navigate(SummaryFragmentDirections.ActionSummaryFragmentToRoundFragment())
+            if(it && !viewModel.gameHasEnded.value!!) findNavController().navigate(SummaryFragmentDirections.ActionSummaryFragmentToRoundFragment())
+        })
+        viewModel.gameHasEnded.observe(this, Observer {
+            if(it) viewModel.showGameSummary()
         })
 
     }

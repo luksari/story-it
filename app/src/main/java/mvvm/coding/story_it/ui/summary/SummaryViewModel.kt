@@ -1,6 +1,5 @@
 package mvvm.coding.story_it.ui.summary
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
@@ -33,7 +32,13 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         get() = _currentVoter
     private val votersList = MutableLiveData<List<Player>>()
     private val votersIterator : MutableLiveData<Int> = MutableLiveData()
-    val summaryHasEnded : MutableLiveData<Boolean> = MutableLiveData()
+
+    private val _summaryHasEnded : MutableLiveData<Boolean> = MutableLiveData()
+    val summaryHasEnded : LiveData<Boolean>
+        get() = _summaryHasEnded
+    private val _gameHasEnded : MutableLiveData<Boolean> = MutableLiveData()
+    val gameHasEnded : LiveData<Boolean>
+        get() = _gameHasEnded
 
     private val _currentRound = MutableLiveData<Round>()
     val currentRound : LiveData<Round>
@@ -49,21 +54,10 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
 
     init {
         getGameDataFromDB()
-        summaryHasEnded.value = false
+        _summaryHasEnded.value = false
+        _gameHasEnded.value = false
         votersIterator.value = 1
 
-    }
-    private fun observeIterator(){
-        votersIterator.observeForever {
-            if(it <= votersList.value!!.size){
-                _currentVoter.value = votersList.value!![it-1]
-                _voterName.value = "Voter: ${_currentVoter.value!!.name}"
-            }
-            else{
-                summaryHasEnded.value = true
-            }
-
-        }
     }
 
     private fun getGameDataFromDB(){
@@ -72,26 +66,45 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         }){
             _gameModel.value = Converters.jsonStringToGameModel(gameEntry.gameStringJson)
             initializeDataToBeShown()
-            observeIterator()
+            initObservers()
         }
     }
 
     private fun initializeDataToBeShown() {
         _currentRound.value = _gameModel.value!!.rounds.last { round -> round.wasCurrent }
         _summaryName.value = "Summary of Round ${_currentRound.value!!.id}"
-        _story.value = _currentRound.value!!.turns.last().words
+        _story.value = _currentRound.value!!.storyPart
         _storyString.value = story.value!!.joinToString(" ") { word -> word.text }
         votersList.value = getPlayers()
         _currentVoter.value = votersList.value!![votersIterator.value!!.minus(1)]
         _voterName.value = "Voter: ${_currentVoter.value!!.name}"
     }
+    private fun initObservers(){
+        _currentRound.observeForever{
+            round->
+            if(round.id == _gameModel.value!!.rounds.last().id) _gameHasEnded.value = true
+        }
+
+        votersIterator.observeForever {
+            if(it <= votersList.value!!.size){
+                _currentVoter.value = votersList.value!![it-1]
+                _voterName.value = "Voter: ${_currentVoter.value!!.name}"
+            }
+            else{
+                _summaryHasEnded.value = true
+            }
+        }
+
+    }
     private fun getPlayers() : List<Player>{
-        var players : List<Player>
-        players = _gameModel.value!!.rounds[0].turns.map { turn -> turn.player }
-        return players
+        return gameModel.value!!.rounds[0].turns.map { turn -> turn.player }
     }
     fun vote(){
         votersIterator.value = votersIterator.value!!.plus(1)
+        // To implement voting functionality
+    }
+    fun showGameSummary(){
+        _summaryName.value = "Summary of Game"
     }
 
 }

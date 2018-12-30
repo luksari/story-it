@@ -84,16 +84,21 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
                 _hasRoundEnded.value = true
             }
             else{
-                _currentTurn.value = _currentRound.value!!.turns.single { turn -> turn.id == it }
-                _currentPlayerName.value = _currentTurn.value!!.player.name
-                _previousTurnStoryPart.value = currentWords.takeLast(_gameModel.value!!.preferences.numberOfWordsShown).joinToString(" ") { word ->  word.text }
-                currentTurnStoryPart.value = ""
+                if(roundsIterator.value!! <= _gameModel.value!!.rounds.size){
+                    _currentTurn.value = _currentRound.value!!.turns.single { turn -> turn.id == it }
+                    _currentPlayerName.value = _currentTurn.value!!.player.name
+                    _previousTurnStoryPart.value = currentWords.takeLast(_gameModel.value!!.preferences.numberOfWordsShown).joinToString(" ") { word ->  word.text }
+                    currentTurnStoryPart.value = ""
+                }
             }
         }
         roundsIterator.observeForever {
             if(it < _gameModel.value!!.rounds.size){
                 _currentRound.value = _gameModel.value!!.rounds.single { round -> round.id == roundsIterator.value }
                 _roundName.value = "Round ${_currentRound.value!!.id}"
+            }
+            else{
+
             }
         }
     }
@@ -104,10 +109,11 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
         }
         _currentTurn.value?.words = currentWords
         gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].turns.toMutableList()[turnsIterator.value!!.minus(1)] = _currentTurn.value!!
+        gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].storyPart = currentWords
+        Log.d("GAME", gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].toString())
 
         upsertGame()
 
-        turnsIterator.value = turnsIterator.value!!.plus(1)
 
     }
 
@@ -115,8 +121,10 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
         _gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].wasCurrent = true
         val gameJson = Converters.gameModelToJson(_gameModel.value!!)
         val game = Game(gameJson)
-        Coroutines.io{
+        Coroutines.ioThenMain({
             gameRepository.upsertGame(game)
+        }){
+            turnsIterator.value = turnsIterator.value!!.plus(1)
         }
     }
 
