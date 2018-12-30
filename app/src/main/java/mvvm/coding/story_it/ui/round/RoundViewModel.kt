@@ -63,13 +63,14 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
     }
     init {
         getGameDataFromDB()
-        turnsIterator.value = 1
-        roundsIterator.value = 1
         _hasRoundEnded.value = false
 
     }
 
     private fun initializeDataToBeShown(){
+        turnsIterator.value = 1
+        roundsIterator.value = _gameModel.value?.rounds?.findLast { round -> round.wasCurrent }?.id?.plus(1) ?: 1
+
         _currentRound.value = _gameModel.value!!.rounds.single { round -> round.id == roundsIterator.value }
         _roundName.value = "Round ${_currentRound.value!!.id}"
         _currentTurn.value = _currentRound.value!!.turns.single { turn -> turn.id == turnsIterator.value }
@@ -90,8 +91,10 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
             }
         }
         roundsIterator.observeForever {
-            _currentRound.value = _gameModel.value!!.rounds.single { round -> round.id == roundsIterator.value }
-            _roundName.value = "Round ${_currentRound.value!!.id}"
+            if(it < _gameModel.value!!.rounds.size){
+                _currentRound.value = _gameModel.value!!.rounds.single { round -> round.id == roundsIterator.value }
+                _roundName.value = "Round ${_currentRound.value!!.id}"
+            }
         }
     }
     fun nextPlayer(){
@@ -105,7 +108,6 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
         upsertGame()
 
         turnsIterator.value = turnsIterator.value!!.plus(1)
-
 
     }
 

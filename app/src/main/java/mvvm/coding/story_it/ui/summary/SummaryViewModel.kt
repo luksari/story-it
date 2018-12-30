@@ -33,6 +33,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         get() = _currentVoter
     private val votersList = MutableLiveData<List<Player>>()
     private val votersIterator : MutableLiveData<Int> = MutableLiveData()
+    val summaryHasEnded : MutableLiveData<Boolean> = MutableLiveData()
 
     private val _currentRound = MutableLiveData<Round>()
     val currentRound : LiveData<Round>
@@ -48,6 +49,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
 
     init {
         getGameDataFromDB()
+        summaryHasEnded.value = false
         votersIterator.value = 1
 
     }
@@ -56,6 +58,9 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
             if(it <= votersList.value!!.size){
                 _currentVoter.value = votersList.value!![it-1]
                 _voterName.value = "Voter: ${_currentVoter.value!!.name}"
+            }
+            else{
+                summaryHasEnded.value = true
             }
 
         }

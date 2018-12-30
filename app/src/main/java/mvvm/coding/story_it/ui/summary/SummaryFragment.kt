@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import mvvm.coding.story_it.R
 import mvvm.coding.story_it.databinding.SummaryFragmentBinding
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -31,6 +33,9 @@ class SummaryFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel.summaryHasEnded.observe(this, Observer{
+            if(it) findNavController().navigate(SummaryFragmentDirections.ActionSummaryFragmentToRoundFragment())
+        })
 
     }
 
