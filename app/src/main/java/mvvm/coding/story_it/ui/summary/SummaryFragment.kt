@@ -39,7 +39,14 @@ class SummaryFragment : Fragment() {
         viewModel.gameHasEnded.observe(this, Observer {
             if(it) viewModel.showGameSummary()
         })
+        setupOptionsUpdate()
 
+    }
+    private fun setupOptionsUpdate(){
+        viewModel.listOfPlayersToVoteFor.observe(this, Observer {
+                options-> if(options.isNotEmpty())
+            viewModel.setAdapter(options)
+        })
     }
 
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="viewModel" type="mvvm.coding.story_it.ui.summary.SummaryViewModel"/>
+        <variable name="position" type="Integer"/>
+    </data>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/option_name" tools:text="Name"
+                  android:textSize="24sp" android:text="@{viewModel.getOption(position).name}"
+        />
+        <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:id="@+id/vote_checkbox" android:checked="@{viewModel.getOption(position).isChosen()}"
+        android:layout_marginStart="20dp"/>
+
+
+
+    </LinearLayout>
+</layout>

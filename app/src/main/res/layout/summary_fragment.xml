@@ -52,6 +52,7 @@
                 app:layout_constraintTop_toBottomOf="@id/voter_name_textview"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintLeft_toRightOf="parent"
+                setAdapter="@{viewModel.adapter}"
         />
         <Button
                 android:id="@+id/next_voter_btn"

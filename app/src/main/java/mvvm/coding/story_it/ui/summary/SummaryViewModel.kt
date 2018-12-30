@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
+import mvvm.coding.story_it.R
 import mvvm.coding.story_it.base.Converters
 import mvvm.coding.story_it.base.Coroutines
 import mvvm.coding.story_it.data.db.entity.Game
@@ -14,6 +15,8 @@ import mvvm.coding.story_it.data.model.Round
 import mvvm.coding.story_it.data.model.Word
 
 class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel() {
+
+    private var adapter : OptionsListAdapter? = null
 
     private lateinit var gameEntry : Game
     private val _gameModel = MutableLiveData<GameModel>()
@@ -34,7 +37,10 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
 
     private val votersList = MutableLiveData<List<Player>>()
     private val votersIterator : MutableLiveData<Int> = MutableLiveData()
-    private val listOfPlayersToVoteFor = MutableLiveData<List<Player>>()
+
+    private val _listOfPlayersToVoteFor = MutableLiveData<List<Player>>()
+    val listOfPlayersToVoteFor : LiveData<List<Player>>
+        get() = _listOfPlayersToVoteFor
 
     private val _summaryHasEnded : MutableLiveData<Boolean> = MutableLiveData()
     val summaryHasEnded : LiveData<Boolean>
@@ -56,10 +62,13 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
 
 
     init {
+        adapter = OptionsListAdapter(R.layout.options_list_item, this)
+
         getGameDataFromDB()
         _summaryHasEnded.value = false
         _gameHasEnded.value = false
         votersIterator.value = 1
+
 
     }
 
@@ -72,6 +81,15 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
             initObservers()
         }
     }
+
+    //region Adapter setter getter
+    fun setAdapter(options: List<Player>){
+        this.adapter?.setOptions(options)
+        this.adapter?.notifyDataSetChanged()
+    }
+    fun getAdapter() = adapter
+    //endregion
+    fun getOption(position: Int) = listOfPlayersToVoteFor.value!![position]
 
     private fun initializeDataToBeShown() {
         _currentRound.value = _gameModel.value!!.rounds.last { round -> round.wasCurrent }
@@ -89,8 +107,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
             if(it <= votersList.value!!.size){
                 _currentVoter.value = votersList.value!![it-1]
                 _voterName.value = "Voter: ${_currentVoter.value!!.name}"
-                listOfPlayersToVoteFor.value = votersList.value!!.filter { voter -> voter != _currentVoter.value }
-                Log.d("OPTIONS", listOfPlayersToVoteFor.value.toString())
+                _listOfPlayersToVoteFor.value = votersList.value!!.filter { voter -> voter != _currentVoter.value }
             }
             else{
                 _summaryHasEnded.value = true
