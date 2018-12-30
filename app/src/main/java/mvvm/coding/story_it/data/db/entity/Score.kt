@@ -11,7 +11,7 @@ import androidx.room.*
 )
 data class Score(
     @PrimaryKey(autoGenerate = true)
-    val id_s: Long,
+    val id_s: Long? = 0,
     @ColumnInfo(name = "player_id") val playerId: Long,
     val points: Int
 )

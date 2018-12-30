@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
 import mvvm.coding.story_it.data.db.entity.Game
 import mvvm.coding.story_it.data.db.entity.Player
 import mvvm.coding.story_it.data.db.entity.Score
@@ -27,7 +26,8 @@ abstract class GameDatabase : RoomDatabase(){
         }
         fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
-                GameDatabase::class.java, "game-story-it.db").build()
+                GameDatabase::class.java, "test.db"
+            ).build()
 
     }
 }

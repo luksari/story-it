@@ -8,7 +8,6 @@ import mvvm.coding.story_it.data.db.ScoreDao
 import mvvm.coding.story_it.data.db.entity.Game
 import mvvm.coding.story_it.data.db.entity.Player
 import mvvm.coding.story_it.data.db.entity.Score
-import java.lang.Exception
 
 class GameRepositoryImpl(
     private val playerDao: PlayerDao,
@@ -41,7 +40,7 @@ class GameRepositoryImpl(
     override fun getPlayerOf(id: Long): Player{
         var player: Player? = null
         try {
-            player = playerDao.getPlayers().single { player -> player.id == id  }
+            player = playerDao.getPlayers().singleOrNull { player -> player.id == id }
         }catch (ex: Exception){
             Log.e("REPOSITORY", ex.localizedMessage)
         }
@@ -55,14 +54,14 @@ class GameRepositoryImpl(
         playerDao.deletePlayers()
     }
 
-    override fun getScoreOf(id: Long): Score {
+    override fun getScoreOf(id: Long): Score? {
         var score: Score? = null
         try {
-            score = scoreDao.getScores().single { score -> score.playerId == id }
+            score = scoreDao.getScores().singleOrNull { score -> score.playerId == id }
         }catch (ex: Exception){
             Log.e("REPOSITORY", ex.localizedMessage)
         }
-        return score!!
+        return score
     }
 
 

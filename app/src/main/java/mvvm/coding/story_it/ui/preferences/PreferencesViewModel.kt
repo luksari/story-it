@@ -1,6 +1,5 @@
 package mvvm.coding.story_it.ui.preferences
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -74,7 +73,7 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
     fun addPlayer(){
         val name =playerName.value ?: "Player"
         if(!isPlayerInList(name)){
-            player = Player(name).also {
+            player = Player(null, name).also {
                 it.isChosen.value=true
             }
             Coroutines.ioThenMain( {gameRepository.addPlayer(player!!)}) {

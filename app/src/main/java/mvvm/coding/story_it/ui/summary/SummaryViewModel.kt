@@ -3,12 +3,13 @@ package mvvm.coding.story_it.ui.summary
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel
 import mvvm.coding.story_it.R
 import mvvm.coding.story_it.base.Converters
 import mvvm.coding.story_it.base.Coroutines
 import mvvm.coding.story_it.data.db.entity.Game
 import mvvm.coding.story_it.data.db.entity.Player
+import mvvm.coding.story_it.data.db.entity.Score
 import mvvm.coding.story_it.data.db.repository.GameRepository
 import mvvm.coding.story_it.data.model.GameModel
 import mvvm.coding.story_it.data.model.Round
@@ -80,6 +81,12 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
             initializeDataToBeShown()
             initObservers()
         }
+        var scores: List<Score>? = null
+        Coroutines.ioThenMain({
+            scores = gameRepository.getScores()
+        }) {
+            Log.d("SCORES", scores.toString())
+        }
     }
 
     //region Adapter setter getter
@@ -123,8 +130,23 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         return gameModel.value!!.rounds[0].turns.map { turn -> turn.player }
     }
     fun vote(){
-        votersIterator.value = votersIterator.value!!.plus(1)
-        // To implement voting functionality
+        var score: Score
+        var prevScore: Score? = null
+        Coroutines.ioThenMain({
+            prevScore = gameRepository.getScoreOf(currentVoter.value!!.id!!)
+        }) {
+            score = if (prevScore != null)
+                Score(prevScore!!.id_s, prevScore!!.playerId, prevScore!!.points + 10)
+            else
+                Score(_currentVoter.value!!.id, _currentVoter.value!!.id!!, 0)
+
+            Coroutines.ioThenMain({
+                gameRepository.addScore(score)
+            }) {
+                votersIterator.value = votersIterator.value!!.plus(1)
+
+            }
+        }
     }
     fun showGameSummary(){
         _summaryName.value = "Summary of Game"
