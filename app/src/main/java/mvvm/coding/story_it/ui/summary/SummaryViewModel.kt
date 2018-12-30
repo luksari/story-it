@@ -95,6 +95,10 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
             }
         }
 
+        _story.observeForever{
+            _storyString.value = it.joinToString(" ") { word -> word.text }
+        }
+
     }
     private fun getPlayers() : List<Player>{
         return gameModel.value!!.rounds[0].turns.map { turn -> turn.player }
@@ -105,6 +109,8 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
     }
     fun showGameSummary(){
         _summaryName.value = "Summary of Game"
+        _story.value = _gameModel.value!!.rounds.map { round -> round.storyPart }.flatten()
+        votersIterator.value = 1
     }
 
 }
