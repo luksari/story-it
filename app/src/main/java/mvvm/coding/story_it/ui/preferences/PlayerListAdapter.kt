@@ -20,6 +20,7 @@ class PlayerListAdapter(@LayoutRes private val layoutId: Int, private val prefer
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         val binding : PlayerListItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.player_list_item, parent, false)
         return PlayerViewHolder(binding)
+
     }
 
     override fun getItemCount(): Int {

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="viewModel" type="mvvm.coding.story_it.ui.leaderboard.LeaderboardViewModel"/>
+        <variable name="position" type="Integer"/>
+    </data>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@{viewModel.getPlayerOfId(1).name}"
+                  android:id="@+id/player_score"
+                  android:textSize="24sp"
+
+        />
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/player_name"
+                android:textSize="24sp"
+                android:text="@{``+viewModel.getScoreOfId(position).points}"
+
+        />
+
+    </LinearLayout>
+</layout>
