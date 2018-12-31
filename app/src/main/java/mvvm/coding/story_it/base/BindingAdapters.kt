@@ -14,8 +14,6 @@ fun bindRecyclerViewAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Ad
     recyclerView.hasFixedSize()
     recyclerView.adapter = adapter
     recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
-//    recyclerView.adapter = adapter
-    println("CONTEXT: "+ recyclerView.adapter)
 }
 
 // region Adapters for a Validation

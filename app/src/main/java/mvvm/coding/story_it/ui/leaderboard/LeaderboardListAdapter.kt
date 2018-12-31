@@ -24,11 +24,8 @@ import mvvm.coding.story_it.databinding.LeaderboardListItemBinding
         }
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LeaderboardViewHolder {
             val binding : LeaderboardListItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.leaderboard_list_item, parent, false)
-            println("LEAD ADAPTER")
             return LeaderboardViewHolder(binding)
-
         }
-
 
         override fun getItemCount(): Int {
             return scores?.size ?: 0
@@ -38,16 +35,11 @@ import mvvm.coding.story_it.databinding.LeaderboardListItemBinding
             holder.bind(leaderboardViewModel, position)
         }
 
-
         inner class LeaderboardViewHolder(private val binding: LeaderboardListItemBinding) : RecyclerView.ViewHolder(binding.root) {
             fun bind(viewModel: LeaderboardViewModel, position: Int){
                 binding.viewModel = viewModel
                 binding.position = position
                 binding.executePendingBindings()
-
             }
-
         }
-
-
     }

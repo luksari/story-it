@@ -14,7 +14,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@{viewModel.getPlayerOfId(1).name}"
+                android:text="@{``+viewModel.getPlayerOfScore(position).name}"
                   android:id="@+id/player_score"
                   android:textSize="24sp"
 
