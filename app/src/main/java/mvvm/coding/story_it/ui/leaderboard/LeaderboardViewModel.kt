@@ -42,9 +42,6 @@ class LeaderboardViewModel(private val gameRepository: GameRepository) : ViewMod
     private fun loadPlayers() {
         Coroutines.ioThenMain({
             playerList = gameRepository.getPlayers().toMutableList()
-            //for testing
-            gameRepository.addScore(Score(1,1,300  ))
-            gameRepository.addScore(Score(2,1,340  ))
         })
         {
             _players.value = playerList
@@ -67,5 +64,5 @@ class LeaderboardViewModel(private val gameRepository: GameRepository) : ViewMod
     fun getPlayerOfId(id: Int) = _players.value?.get(id)
     fun getScoreOfId(id: Int) = _scores.value?.get(id)
     fun getPlayerOfScore(id: Int) = getPlayerOfId(getScoreOfId(id)!!.playerId.toInt())
-
+    fun getPositionOfPlayer(id: Int)= id+1
 }

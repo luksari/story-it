@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.preferences_fragment.*
 import mvvm.coding.story_it.R
 import mvvm.coding.story_it.databinding.LeaderboardFragmentBinding
+import mvvm.coding.story_it.ui.preferences.PreferencesFragmentDirections
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LeaderboardFragment : Fragment() {
@@ -33,6 +36,8 @@ class LeaderboardFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupListUpdate()
+
+        back_btn.setOnClickListener { findNavController().navigate(LeaderboardFragmentDirections.actionLeaderboardFragmentToStartFragment()) }
     }
     private fun setupListUpdate(){
         viewModel.scores.observe(this, Observer {

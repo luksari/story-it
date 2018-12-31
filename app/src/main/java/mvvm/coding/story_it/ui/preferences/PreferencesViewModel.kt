@@ -75,14 +75,10 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
                 it.isChosen.value=true
             }
             Coroutines.ioThenMain( {gameRepository.addPlayer(player!!)
-                //to check if works in leaderboard
-              gameRepository.addScore(Score(5,4,110  ))
             }) {
                 playerList.add(player!!)
                 _players.value = playerList
-
             }
-
         }
         else{
             playerName.value = "${playerName.value}${_players.value?.size}"

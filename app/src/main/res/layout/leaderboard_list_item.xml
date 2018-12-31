@@ -14,9 +14,21 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:text="@{``+viewModel.getPositionOfPlayer(position)}"
+                android:id="@+id/player_position"
+                android:textSize="24sp"
+                android:gravity="left"
+
+        />
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="@{``+viewModel.getPlayerOfScore(position).name}"
                   android:id="@+id/player_score"
                   android:textSize="24sp"
+                android:gravity="center"
+
 
         />
         <TextView
@@ -26,6 +38,8 @@
                 android:id="@+id/player_name"
                 android:textSize="24sp"
                 android:text="@{``+viewModel.getScoreOfId(position).points}"
+                android:gravity="right"
+
         />
 
     </LinearLayout>
