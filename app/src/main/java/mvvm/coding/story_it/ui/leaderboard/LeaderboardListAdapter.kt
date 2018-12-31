@@ -14,13 +14,11 @@ import mvvm.coding.story_it.databinding.LeaderboardListItemBinding
     class LeaderboardListAdapter(@LayoutRes private val layoutId: Int, private val leaderboardViewModel: LeaderboardViewModel) : RecyclerView.Adapter<LeaderboardListAdapter.LeaderboardViewHolder>() {
         private var players : List<Player>? = leaderboardViewModel.players.value
         private var scores : List<Score>? = leaderboardViewModel.scores.value
-
-        fun setPlayers(players: List<Player>){
-            this.players = players
-        }
-
         fun setScores(scores: List<Score>){
             this.scores = scores
+        }
+        fun setPlayers(players:List<Player>){
+            this.players=players
         }
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LeaderboardViewHolder {
             val binding : LeaderboardListItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.leaderboard_list_item, parent, false)

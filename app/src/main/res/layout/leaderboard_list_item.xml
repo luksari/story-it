@@ -26,7 +26,6 @@
                 android:id="@+id/player_name"
                 android:textSize="24sp"
                 android:text="@{``+viewModel.getScoreOfId(position).points}"
-
         />
 
     </LinearLayout>

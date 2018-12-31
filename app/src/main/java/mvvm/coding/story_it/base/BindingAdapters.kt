@@ -10,7 +10,6 @@ import kotlin.math.max
 
 @BindingAdapter("setAdapter")
 fun bindRecyclerViewAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>){
-    println("CONTEXT: "+adapter)
     recyclerView.hasFixedSize()
     recyclerView.adapter = adapter
     recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)

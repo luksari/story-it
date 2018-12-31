@@ -9,6 +9,7 @@ import mvvm.coding.story_it.base.Converters
 import mvvm.coding.story_it.base.Coroutines
 import mvvm.coding.story_it.data.db.entity.Game
 import mvvm.coding.story_it.data.db.entity.Player
+import mvvm.coding.story_it.data.db.entity.Score
 import mvvm.coding.story_it.data.db.repository.GameRepository
 import mvvm.coding.story_it.data.model.GameModel
 import mvvm.coding.story_it.data.model.Preferences
@@ -73,10 +74,15 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
             player = Player(name).also {
                 it.isChosen.value=true
             }
-            Coroutines.ioThenMain( {gameRepository.addPlayer(player!!)}) {
+            Coroutines.ioThenMain( {gameRepository.addPlayer(player!!)
+                //to check if works in leaderboard
+              gameRepository.addScore(Score(5,4,110  ))
+            }) {
                 playerList.add(player!!)
                 _players.value = playerList
+
             }
+
         }
         else{
             playerName.value = "${playerName.value}${_players.value?.size}"

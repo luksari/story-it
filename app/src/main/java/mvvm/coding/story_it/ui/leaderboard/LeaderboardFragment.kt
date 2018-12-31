@@ -37,9 +37,12 @@ class LeaderboardFragment : Fragment() {
     private fun setupListUpdate(){
         viewModel.scores.observe(this, Observer {
                 scores-> if(scores.isNotEmpty())
-            viewModel.setAdapter(scores)
+            viewModel.setAdapterScores(scores)
         })
-
+        viewModel.players.observe(this, Observer {
+                players-> if(players.isNotEmpty())
+            viewModel.setAdapterPlayers(players)
+        })
     }
 
 

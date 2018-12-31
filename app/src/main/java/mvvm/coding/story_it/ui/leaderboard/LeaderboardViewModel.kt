@@ -1,4 +1,5 @@
 package mvvm.coding.story_it.ui.leaderboard
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel;
@@ -22,8 +23,12 @@ class LeaderboardViewModel(private val gameRepository: GameRepository) : ViewMod
 
     private var adapter: LeaderboardListAdapter? = null
     fun getAdapter() = adapter
-    fun setAdapter(scores: List<Score>) {
+    fun setAdapterScores(scores: List<Score>) {
         this.adapter?.setScores(scores)
+        this.adapter?.notifyDataSetChanged()
+    }
+    fun setAdapterPlayers(players: List<Player>) {
+        this.adapter?.setPlayers(players)
         this.adapter?.notifyDataSetChanged()
     }
 
@@ -37,10 +42,13 @@ class LeaderboardViewModel(private val gameRepository: GameRepository) : ViewMod
     private fun loadPlayers() {
         Coroutines.ioThenMain({
             playerList = gameRepository.getPlayers().toMutableList()
-
+            //for testing
+            gameRepository.addScore(Score(1,1,300  ))
+            gameRepository.addScore(Score(2,1,340  ))
         })
         {
             _players.value = playerList
+            _players.value?.forEach { player-> Log.d("PLAYER", player.name )}
         }
     }
 
@@ -52,6 +60,7 @@ class LeaderboardViewModel(private val gameRepository: GameRepository) : ViewMod
         {
             var sortedList = scoreList.sortedWith(compareByDescending { it.points })
             _scores.value = sortedList
+            scores.value?.forEach { score-> Log.d("SCORE", score.id_s.toString())}
         }
     }
 
