@@ -74,6 +74,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         getGameDataFromDB()
         _summaryHasEnded.value = false
         _gameHasEnded.value = false
+        isBuilderLoaded.value = false
         votersIterator.value = 1
 
 
@@ -116,12 +117,12 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         var color: Int
         for(w in listOfWords){
             coloredText = SpannableString(w.text)
-            color = w.owner.color!!.value as Int
+            color = w.owner.color.value as Int
             coloredText.setSpan(ForegroundColorSpan(color), 0, w.text.length, 0)
             builder.append(coloredText)
         }
         //mTextView.setText(builder, BufferType.SPANNABLE);
-        _storyString.value = builder.toString()
+        //_storyString.value = builder.toString()
 
 
 
@@ -146,6 +147,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
 
         _story.observeForever{
             _storyString.value = it.joinToString(" ") { word -> word.text }
+            isBuilderLoaded.value = true
         }
 
     }

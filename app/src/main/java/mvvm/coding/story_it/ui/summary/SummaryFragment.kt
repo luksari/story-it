@@ -46,7 +46,7 @@ class SummaryFragment : Fragment() {
 //            viewModel.isBuilderLoaded.value =true
 //        })
         viewModel.isBuilderLoaded.observe(this, Observer {
-            story_textview.setText(viewModel.builder, TextView.BufferType.SPANNABLE)
+           if(it) story_textview.setText(viewModel.builder, TextView.BufferType.SPANNABLE)
         })
 
         setupOptionsUpdate()
