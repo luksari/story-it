@@ -116,9 +116,9 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         var coloredText: SpannableString
         var color: Int
         for(w in listOfWords){
-            coloredText = SpannableString(w.text)
+            coloredText = SpannableString(w.text+" ")
             color = w.owner.color.value as Int
-            coloredText.setSpan(ForegroundColorSpan(color), 0, w.text.length, 0)
+            coloredText.setSpan(ForegroundColorSpan(color), 0, w.text.length+1, 0)
             builder.append(coloredText)
         }
         //mTextView.setText(builder, BufferType.SPANNABLE);
