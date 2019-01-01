@@ -70,7 +70,6 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         _gameHasEnded.value = false
         votersIterator.value = 1
 
-
     }
 
     private fun getGameDataFromDB(){
@@ -115,6 +114,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
                 _currentVoter.value = votersList.value!![it-1]
                 _voterName.value = "Voter: ${_currentVoter.value!!.name}"
                 _listOfPlayersToVoteFor.value = votersList.value!!.filter { voter -> voter != _currentVoter.value }
+                listOfPlayersToVoteFor.value!!.forEach { it.isChosen.value=false } //initally, need to check it in entitity
             }
             else{
                 _summaryHasEnded.value = true
@@ -132,7 +132,11 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
     fun vote(){
         var score: Score
         var prevScore: Score? = null
-        val chosenPlayer = listOfPlayersToVoteFor.value!!.single { player -> player.isChosen.value!! }
+        listOfPlayersToVoteFor.value!!.forEach {  player -> Log.d("CHECKED",player.isChosen.value.toString() )}
+        listOfPlayersToVoteFor.value!!.forEach {  player -> Log.d("CHECKED",player.name )}
+
+
+      val chosenPlayer = listOfPlayersToVoteFor.value!!.single { player -> player.isChosen.value!! }
 
         Coroutines.ioThenMain({
             prevScore = gameRepository.getScoreOf(chosenPlayer.id!!)
