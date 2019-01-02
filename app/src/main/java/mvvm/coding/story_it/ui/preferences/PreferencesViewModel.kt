@@ -20,6 +20,10 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
 
     val playerName : MutableLiveData<String> = MutableLiveData()
 
+    val colorPalette:Array<Int> = arrayOf(-65536, -16711936, -1677691, -28416, -28193, -6941491, -10626626, -256, -167772160, -8049577,
+        -8388566, -4980737, -16764058, -10066279, -16766876, -3381760, -1199547, -6684775, -16724839, -11888384, -3407807, -16777146, -4539734,
+        -4539734, -13159, -16757504, -11730867, -3381607, -16764109, -13421824, -15554550, -10863526, -12821956, -9305600, -9276928)
+
     val numberOfRounds = MutableLiveData<Int>()
     val numberOfWords = MutableLiveData<Int>()
     val numberOfCharacters = MutableLiveData<Int>()
@@ -132,6 +136,13 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
             var tempTurns = mutableListOf<Turn>()
             var tempPlayers = chosenPlayers.value!!
 
+            var i: Int = 0
+            for (p in tempPlayers){
+                val mutableLiveData: MutableLiveData<Int> = MutableLiveData()
+                mutableLiveData.value = colorPalette[i]
+                p.color =  mutableLiveData
+                i++
+            }
 
             if(!isRandomOrder.value!!) {
                 for (i in 0 until _chosenPlayers.value!!.size){

@@ -39,7 +39,8 @@
                    playerName="@{viewModel.playerName}"
                    android:text="@={viewModel.playerName}"
                    app:layout_constraintBottom_toTopOf="@id/new_player_btn"
-                   android:inputType="text"/>
+                   android:inputType="text"
+                    android:maxLength="15"/>
 
            <androidx.recyclerview.widget.RecyclerView
                    android:id="@+id/players_scrollview"
