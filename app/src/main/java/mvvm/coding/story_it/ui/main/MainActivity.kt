@@ -27,15 +27,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        supportActionBar?.title = "Story.it"
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-
-        navController.addOnDestinationChangedListener { navController, destination, arguments ->
-            Toast.makeText(this, destination.label, Toast.LENGTH_SHORT).show()
-        }
+//
+//        navController.addOnDestinationChangedListener { navController, destination, arguments ->
+//            Toast.makeText(this, destination.label, Toast.LENGTH_SHORT).show()
+//        }
 
         NavigationUI.setupActionBarWithNavController(this, navController)
-
 
     }
 
