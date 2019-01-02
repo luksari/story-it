@@ -55,6 +55,10 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
     private val _gameHasEnded : MutableLiveData<Boolean> = MutableLiveData()
     val gameHasEnded : LiveData<Boolean>
         get() = _gameHasEnded
+    private val _lastSummaryHasEnded: MutableLiveData<Boolean> = MutableLiveData()
+    val lastSummaryHasEnded: LiveData<Boolean>
+        get() = _lastSummaryHasEnded
+
 
     private val _currentRound = MutableLiveData<Round>()
     val currentRound : LiveData<Round>
@@ -74,6 +78,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         getGameDataFromDB()
         _summaryHasEnded.value = false
         _gameHasEnded.value = false
+        _lastSummaryHasEnded.value = false
         isBuilderLoaded.value = false
         votersIterator.value = 1
 
@@ -139,8 +144,9 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
                 _voterName.value = "Voter: ${_currentVoter.value!!.name}"
                 _listOfPlayersToVoteFor.value = votersList.value!!.filter { voter -> voter != _currentVoter.value }
                 listOfPlayersToVoteFor.value!!.forEach { it.isChosen.value=false } //initally, need to check it in entitity
-            }
-            else{
+            } else if (it > votersList.value!!.size && currentRound.value == gameModel.value!!.rounds.last()) {
+                _lastSummaryHasEnded.value = true
+            } else{
                 _summaryHasEnded.value = true
             }
         }

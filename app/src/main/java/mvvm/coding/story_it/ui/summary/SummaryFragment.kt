@@ -1,14 +1,12 @@
 package mvvm.coding.story_it.ui.summary
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.summary_fragment.*
@@ -39,8 +37,14 @@ class SummaryFragment : Fragment() {
         viewModel.summaryHasEnded.observe(this, Observer{
             if(it && !viewModel.gameHasEnded.value!!) findNavController().navigate(SummaryFragmentDirections.ActionSummaryFragmentToRoundFragment())
         })
-        viewModel.gameHasEnded.observe(this, Observer {
-            if(it) viewModel.showGameSummary()
+        viewModel.lastSummaryHasEnded.observe(this, Observer {
+            if (it) {
+                viewModel.showGameSummary()
+                next_voter_btn.text = "Go to leaderboard!"
+                voter_name_textview.visibility = View.GONE
+                next_voter_btn.setOnClickListener { findNavController().navigate(SummaryFragmentDirections.ActionSummaryFragmentToLeaderboardFragment()) }
+                options_recyclerview.visibility = View.GONE
+            }
         })
 //        viewModel.storyString.observe(this, Observer {
 //            viewModel.isBuilderLoaded.value =true
