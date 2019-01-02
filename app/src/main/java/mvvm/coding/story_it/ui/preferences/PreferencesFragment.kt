@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.preferences_fragment.*
+import kotlinx.android.synthetic.main.round_fragment.*
 
 
 import org.koin.android.viewmodel.ext.android.viewModel

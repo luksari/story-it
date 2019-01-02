@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.round_fragment.*
 import mvvm.coding.story_it.R
 import mvvm.coding.story_it.databinding.RoundFragmentBinding
 import org.koin.android.viewmodel.ext.android.viewModel
