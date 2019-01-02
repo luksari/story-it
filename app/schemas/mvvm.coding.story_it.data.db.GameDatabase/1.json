@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4d648bffab44cf568d566a41f4e5db4a",
+    "identityHash": "1b0003e27aa5ca057f927c53684cfb9c",
     "entities": [
       {
         "tableName": "players",
@@ -41,13 +41,13 @@
       },
       {
         "tableName": "scores",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id_s` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `player_id` INTEGER NOT NULL, `points` INTEGER NOT NULL, FOREIGN KEY(`player_id`) REFERENCES `players`(`id_p`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id_s` INTEGER PRIMARY KEY AUTOINCREMENT, `player_id` INTEGER NOT NULL, `points` INTEGER NOT NULL, FOREIGN KEY(`player_id`) REFERENCES `players`(`id_p`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id_s",
             "columnName": "id_s",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "playerId",
@@ -122,7 +122,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4d648bffab44cf568d566a41f4e5db4a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1b0003e27aa5ca057f927c53684cfb9c\")"
     ]
   }
 }

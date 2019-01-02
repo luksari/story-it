@@ -8,7 +8,9 @@ import mvvm.coding.story_it.data.db.repository.GameRepositoryImpl
 import mvvm.coding.story_it.ui.leaderboard.LeaderboardViewModel
 import mvvm.coding.story_it.ui.main.MainViewModel
 import mvvm.coding.story_it.ui.preferences.PreferencesViewModel
+import mvvm.coding.story_it.ui.round.RoundViewModel
 import mvvm.coding.story_it.ui.start.StartViewModel
+import mvvm.coding.story_it.ui.summary.SummaryViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.ext.koin.viewModel
 
@@ -29,5 +31,9 @@ val appModule = module {
     viewModel { StartViewModel(get()) }
     viewModel { PreferencesViewModel(get()) }
     viewModel { LeaderboardViewModel(get()) }
+    viewModel { RoundViewModel(get()) }
+    viewModel { SummaryViewModel(get()) }
+
+
 
 }

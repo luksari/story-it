@@ -30,5 +30,6 @@
               android:label="summary_fragment" tools:layout="@layout/summary_fragment">
         <action android:id="@+id/action_summaryFragment_to_leaderboardFragment"
                 app:destination="@id/leaderboardFragment"/>
+        <action android:id="@+id/action_summaryFragment_to_roundFragment" app:destination="@id/roundFragment"/>
     </fragment>
 </navigation>

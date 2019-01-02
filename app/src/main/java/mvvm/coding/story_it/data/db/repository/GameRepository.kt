@@ -1,7 +1,6 @@
 package mvvm.coding.story_it.data.db.repository
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
 import mvvm.coding.story_it.data.db.entity.Game
 import mvvm.coding.story_it.data.db.entity.Player
 import mvvm.coding.story_it.data.db.entity.Score
@@ -17,10 +16,11 @@ interface GameRepository {
     fun getPlayers() : List<Player>
 
     fun getPlayerOf(id: Long) : Player
+    fun getPlayerOf(name: String) : Player
     @WorkerThread
     fun getScores():List<Score>
 
-    fun getScoreOf(id: Long) : Score
+    fun getScoreOf(id: Long): Score?
     @WorkerThread
     fun addPlayer(player: Player)
     @WorkerThread

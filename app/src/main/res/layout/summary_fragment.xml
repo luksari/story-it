@@ -1,14 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.summary.SummaryFragment">
-
-    <TextView
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="viewModel" type="mvvm.coding.story_it.ui.summary.SummaryViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Hello"/>
+            tools:context=".ui.summary.SummaryFragment"
+    android:padding="20dp">
 
-</FrameLayout>
+        <TextView android:id="@+id/summary_name_textview"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  app:layout_constraintTop_toTopOf="parent"
+                  app:layout_constraintLeft_toLeftOf="parent"
+                  app:layout_constraintRight_toRightOf="parent"
+                  tools:text="Summary name"
+                  android:textSize="36sp"
+                  android:textAlignment="center"
+                  android:text="@{viewModel.summaryName}"
+        />
+        <TextView
+                android:id="@+id/story_textview"
+                android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  app:layout_constraintTop_toBottomOf="@id/summary_name_textview"
+                  tools:text="It is part of written story"
+
+                  android:padding="20dp"
+                  android:layout_marginTop="30dp"
+        />
+        <!--android:text="@{viewModel.storyString}"-->
+
+        <TextView android:id="@+id/voter_name_textview"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  app:layout_constraintTop_toBottomOf="@id/story_textview"
+                  app:layout_constraintLeft_toLeftOf="parent"
+                  app:layout_constraintRight_toRightOf="parent"
+                  tools:text="Voter: Player"
+                  android:layout_marginTop="30dp"
+                  android:textSize="36sp"
+                  android:textAlignment="center"
+                  android:text="@{viewModel.voterName}"
+        />
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/options_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/voter_name_textview"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="parent"
+                setAdapter="@{viewModel.adapter}"
+        />
+        <Button
+                android:id="@+id/next_voter_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/options_recyclerview"
+                android:layout_marginTop="10dp"
+                android:text="Vote!"
+                android:onClick="@{()-> viewModel.vote()}"
+        />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
