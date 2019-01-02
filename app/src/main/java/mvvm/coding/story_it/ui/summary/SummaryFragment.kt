@@ -46,11 +46,8 @@ class SummaryFragment : Fragment() {
                 options_recyclerview.visibility = View.GONE
             }
         })
-//        viewModel.storyString.observe(this, Observer {
-//            viewModel.isBuilderLoaded.value =true
-//        })
         viewModel.isBuilderLoaded.observe(this, Observer {
-           if(it) story_textview.setText(viewModel.builder, TextView.BufferType.SPANNABLE)
+            if (it) story_textview.setText(viewModel.stringBuilder.value, TextView.BufferType.SPANNABLE)
         })
 
         setupOptionsUpdate()

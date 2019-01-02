@@ -2,8 +2,6 @@ package mvvm.coding.story_it.ui.summary
 
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,7 +20,10 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
 
     private var adapter : OptionsListAdapter? = null
 
-    val builder = SpannableStringBuilder()
+    private val _stringBuilder = MutableLiveData<SpannableStringBuilder>()
+    val stringBuilder: LiveData<SpannableStringBuilder>
+        get() = _stringBuilder
+
     val isBuilderLoaded = MutableLiveData<Boolean>()
 
     private lateinit var gameEntry : Game
@@ -80,6 +81,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         _gameHasEnded.value = false
         _lastSummaryHasEnded.value = false
         isBuilderLoaded.value = false
+        _stringBuilder.value = SpannableStringBuilder()
         votersIterator.value = 1
 
     }
@@ -96,7 +98,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         Coroutines.ioThenMain({
             scores = gameRepository.getScores()
         }) {
-            Log.d("SCORES", scores.toString())
+
         }
     }
 
@@ -114,23 +116,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         _summaryName.value = "Summary of Round ${_currentRound.value!!.id}"
         _story.value = _currentRound.value!!.storyPart
         votersList.value = getPlayers()
-        //---------------------------------------------------------------------------------------------------------------
-        //                              HERE PUT PLAYER COLORS
-        val listOfWords: List<Word> = _currentRound.value!!.storyPart
-        var coloredText: SpannableString
-        var color: Int
-        for(w in listOfWords){
-            coloredText = SpannableString(w.text+" ")
-            color = w.owner.color.value as Int
-            coloredText.setSpan(ForegroundColorSpan(color), 0, w.text.length+1, 0)
-            builder.append(coloredText)
-        }
-        //mTextView.setText(builder, BufferType.SPANNABLE);
-        //_storyString.value = builder.toString()
 
-
-
-        //---------------------------------------------------------------------------------------------------------------
     }
     private fun initObservers(){
         _currentRound.observeForever{
@@ -152,10 +138,23 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         }
 
         _story.observeForever{
-            _storyString.value = it.joinToString(" ") { word -> word.text }
-            isBuilderLoaded.value = true
+            updateStringBuilder()
         }
 
+    }
+
+    private fun updateStringBuilder() {
+        isBuilderLoaded.value = false
+        val listOfWords: List<Word> = _story.value!!
+        var coloredText: SpannableString
+        var color: Int
+        for (w in listOfWords) {
+            coloredText = SpannableString(w.text + " ")
+            color = w.owner.color.value as Int
+            coloredText.setSpan(ForegroundColorSpan(color), 0, w.text.length + 1, 0)
+            _stringBuilder.value?.append(coloredText)
+        }
+        isBuilderLoaded.value = true
     }
     private fun getPlayers() : List<Player>{
         return gameModel.value!!.rounds[0].turns.map { turn -> turn.player }
@@ -189,7 +188,7 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         _summaryName.value = "Summary of Game"
         _story.value = _gameModel.value!!.rounds.map { round -> round.storyPart }.flatten()
         votersIterator.value = 1
-        isBuilderLoaded.value = true
+
     }
 
 }
