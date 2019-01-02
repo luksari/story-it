@@ -3,7 +3,6 @@ package mvvm.coding.story_it.ui.round
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import mvvm.coding.story_it.base.Converters
 import mvvm.coding.story_it.base.Coroutines
@@ -19,6 +18,8 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
     private val _roundName : MutableLiveData<String> = MutableLiveData()
     val roundName : LiveData<String>
         get() = _roundName
+
+    val MAX_CHARS = MutableLiveData<Int>()
 
     private val _previousTurnStoryPart : MutableLiveData<String> = MutableLiveData()
     val previousTurnStoryPart : LiveData<String>
@@ -58,6 +59,7 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
             gameEntry = gameRepository.getGameEntry()
         }){
              _gameModel.value = Converters.jsonStringToGameModel(gameEntry.gameStringJson)
+            MAX_CHARS.value = _gameModel.value!!.preferences.maxChars
             initializeDataToBeShown()
         }
     }
@@ -70,7 +72,6 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
     private fun initializeDataToBeShown(){
         turnsIterator.value = 1
         roundsIterator.value = _gameModel.value?.rounds?.findLast { round -> round.wasCurrent }?.id?.plus(1) ?: 1
-
         _currentRound.value = _gameModel.value!!.rounds.single { round -> round.id == roundsIterator.value }
         _roundName.value = "Round ${_currentRound.value!!.id}"
         _currentTurn.value = _currentRound.value!!.turns.single { turn -> turn.id == turnsIterator.value }
@@ -113,7 +114,6 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
         Log.d("GAME", gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].toString())
 
         upsertGame()
-
 
     }
 

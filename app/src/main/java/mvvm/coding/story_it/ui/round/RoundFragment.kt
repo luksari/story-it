@@ -1,11 +1,11 @@
 package mvvm.coding.story_it.ui.round
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.round_fragment.*
@@ -39,7 +39,11 @@ class RoundFragment : Fragment() {
                 findNavController().navigate(RoundFragmentDirections.actionRoundFragmentToSummaryFragment())
             }
         })
-
+        viewModel.currentTurnStoryPart.observe(this, Observer {
+            start_turn_btn.isEnabled = it.length <= viewModel.MAX_CHARS.value!!
+            if (it.length > viewModel.MAX_CHARS.value!!)
+                word_edittext.error =
+                        "Length of written text must be shorter than ${viewModel.MAX_CHARS.value.toString()}."
+        })
     }
-
 }
