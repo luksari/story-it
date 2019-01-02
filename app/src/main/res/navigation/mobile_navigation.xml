@@ -3,7 +3,6 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/mobile_navigation"
             app:startDestination="@id/startFragment">
-
     <fragment android:id="@+id/startFragment" android:name="mvvm.coding.story_it.ui.start.startFragment"
              tools:layout="@layout/start_fragment">
         <action android:id="@+id/action_startFragment_to_preferencesFragment"

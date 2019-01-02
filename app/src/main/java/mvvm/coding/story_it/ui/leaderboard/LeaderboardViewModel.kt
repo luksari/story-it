@@ -45,7 +45,6 @@ class LeaderboardViewModel(private val gameRepository: GameRepository) : ViewMod
         })
         {
             _players.value = playerList
-            _players.value?.forEach { player-> Log.d("PLAYER", player.name )}
         }
     }
 
@@ -57,7 +56,6 @@ class LeaderboardViewModel(private val gameRepository: GameRepository) : ViewMod
         {
             var sortedList = scoreList.sortedWith(compareByDescending { it.points })
             _scores.value = sortedList
-            scores.value?.forEach { score-> Log.d("SCORE", score.id_s.toString())}
         }
     }
 
