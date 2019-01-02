@@ -63,6 +63,6 @@ class LeaderboardViewModel(private val gameRepository: GameRepository) : ViewMod
 
     fun getPlayerOfId(id: Int) = _players.value?.get(id)
     fun getScoreOfId(id: Int) = _scores.value?.get(id)
-    fun getPlayerOfScore(id: Int) = getPlayerOfId(getScoreOfId(id)!!.playerId.toInt())
+    fun getPlayerOfScore(id: Int) = getPlayerOfId(getScoreOfId(id)!!.playerId.toInt()-1)
     fun getPositionOfPlayer(id: Int)= id+1
 }
