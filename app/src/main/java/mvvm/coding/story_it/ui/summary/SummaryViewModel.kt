@@ -132,27 +132,28 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
     fun vote(){
         var score: Score
         var prevScore: Score? = null
-        listOfPlayersToVoteFor.value!!.forEach {  player -> Log.d("CHECKED",player.isChosen.value.toString() )}
-        listOfPlayersToVoteFor.value!!.forEach {  player -> Log.d("CHECKED",player.name )}
 
-
-      val chosenPlayer = listOfPlayersToVoteFor.value!!.single { player -> player.isChosen.value!! }
-
-        Coroutines.ioThenMain({
-            prevScore = gameRepository.getScoreOf(chosenPlayer.id!!)
-        }) {
-            score = if (prevScore != null)
-                Score(prevScore!!.id_s, prevScore!!.playerId, prevScore!!.points + 10)
-            else
-                Score(chosenPlayer.id, chosenPlayer.id!!, 10)
+        val chosenPlayers =  listOfPlayersToVoteFor.value!!.filter { player -> player.isChosen.value!! }
+        val points = if (chosenPlayers.isEmpty()) {
+            0
+        } else {
+            (10/chosenPlayers.size).toInt()
+        }
 
             Coroutines.ioThenMain({
-                gameRepository.addScore(score)
-            }) {
-                votersIterator.value = votersIterator.value!!.plus(1)
-            }
-        }
+                chosenPlayers.forEach {
+                    prevScore = gameRepository.getScoreOf(it.id!!)
+                    score = if (prevScore != null)
+                        Score(prevScore!!.id_s, prevScore!!.playerId, prevScore!!.points + points)
+                    else
+                        Score(it.id!!, it.id!!, points)
+
+                            gameRepository.addScore(score)
+                }
+            }) {}
+        votersIterator.value = votersIterator.value!!.plus(1)
     }
+
     fun showGameSummary(){
         _summaryName.value = "Summary of Game"
         _story.value = _gameModel.value!!.rounds.map { round -> round.storyPart }.flatten()

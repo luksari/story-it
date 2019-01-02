@@ -16,6 +16,7 @@ interface GameRepository {
     fun getPlayers() : List<Player>
 
     fun getPlayerOf(id: Long) : Player
+    fun getPlayerOf(name: String) : Player
     @WorkerThread
     fun getScores():List<Score>
 

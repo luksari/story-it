@@ -72,11 +72,12 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
     // Adds player to DB on IO thread, then adds it to playerList that is value of MutableList to watch for updates
     fun addPlayer(){
         val name =playerName.value ?: "Player"
+        var playerId:Long ?=null
         if(!isPlayerInList(name)){
-            player = Player(null, name).also {
-                it.isChosen.value=true
-            }
-            Coroutines.ioThenMain( {gameRepository.addPlayer(player!!)}) {
+            player = Player(null, name)
+            Coroutines.ioThenMain( {gameRepository.addPlayer(player!!)
+                    playerId = gameRepository.getPlayerOf(player!!.name).id }) {
+                player=Player(playerId,name).also { it.isChosen.value=true }
                 playerList.add(player!!)
                 _players.value = playerList
             }

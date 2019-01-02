@@ -46,6 +46,15 @@ class GameRepositoryImpl(
         }
         return player!!
     }
+    override fun getPlayerOf(name: String): Player{
+        var player: Player? = null
+        try {
+            player = playerDao.getPlayers().singleOrNull { player -> player.name == name }
+        }catch (ex: Exception){
+            Log.e("REPOSITORY", ex.localizedMessage)
+        }
+        return player!!
+    }
     @WorkerThread
     override fun getScores(): List<Score> = scoreDao.getScores()
 
