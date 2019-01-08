@@ -1,6 +1,7 @@
 package mvvm.coding.story_it.ui.round
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.round_fragment.*
 import mvvm.coding.story_it.R
 import mvvm.coding.story_it.databinding.RoundFragmentBinding
+import mvvm.coding.story_it.ui.main.MainActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class RoundFragment : Fragment() {
@@ -45,5 +47,6 @@ class RoundFragment : Fragment() {
                 word_edittext.error =
                         "Length of written text must be shorter than ${viewModel.MAX_CHARS.value.toString()}."
         })
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 }

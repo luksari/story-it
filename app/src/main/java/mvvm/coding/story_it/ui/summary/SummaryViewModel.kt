@@ -149,6 +149,8 @@ class SummaryViewModel(private val gameRepository: GameRepository) : ViewModel()
         val listOfWords: List<Word> = _story.value!!
         var coloredText: SpannableString
         var color: Int
+        _stringBuilder.value?.clear()
+
         for (w in listOfWords) {
             coloredText = SpannableString(w.text + " ")
             color = w.owner.color.value as Int

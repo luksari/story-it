@@ -19,16 +19,8 @@ class GameRepositoryImpl(
     /*
     * Every of those getters sets the value of mutable property from the _gameModel.value.*
     * And then returns LiveData<*> to make it Observable for ViewModels.
-    * @TODO FEATURE
-    * Store CurrentGame in Database
     * */
 
-
-
-    /* @TODO Think about implementation of this, (When the * is current??)
-    // @TODO Need to add currentProperty in Parent class of every Obj from (Player -> Turn, Turn -> Round, Round -> GameModel) */
-
-    //private var _currentTurn : MutableLiveData<Turn> = MutableLiveData()
 
 
     //region Database Getters Methods

@@ -115,7 +115,6 @@ class PreferencesViewModel(private val gameRepository: GameRepository) : ViewMod
     fun getPlayerOfId(id: Int) = _players.value?.get(id)
 
     fun clearPreferences(){
-        //_players.value?.forEach { player-> player.isChosen.value = false }
         numberOfRounds.value = 4
         numberOfCharacters.value = 140
         numberOfWords.value = 2

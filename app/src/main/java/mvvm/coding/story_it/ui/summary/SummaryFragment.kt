@@ -1,6 +1,7 @@
 package mvvm.coding.story_it.ui.summary
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.summary_fragment.*
 import mvvm.coding.story_it.R
 import mvvm.coding.story_it.databinding.SummaryFragmentBinding
+import mvvm.coding.story_it.ui.main.MainActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SummaryFragment : Fragment() {
@@ -51,6 +53,7 @@ class SummaryFragment : Fragment() {
         })
 
         setupOptionsUpdate()
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
     }
     private fun setupOptionsUpdate(){

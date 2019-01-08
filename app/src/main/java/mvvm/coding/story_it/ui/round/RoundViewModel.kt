@@ -111,7 +111,6 @@ class RoundViewModel(private val gameRepository: GameRepository) : ViewModel() {
         _currentTurn.value?.words = currentWords
         gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].turns.toMutableList()[turnsIterator.value!!.minus(1)] = _currentTurn.value!!
         gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].storyPart = currentWords
-        Log.d("GAME", gameModel.value!!.rounds[roundsIterator.value!!.minus(1)].toString())
 
         upsertGame()
 

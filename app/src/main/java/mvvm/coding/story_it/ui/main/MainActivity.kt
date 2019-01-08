@@ -1,6 +1,8 @@
 package mvvm.coding.story_it.ui.main
 
 import android.os.Bundle
+import android.text.Layout
+import android.util.Log
 import android.widget.MediaController
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,10 +14,12 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import kotlinx.android.synthetic.main.activity_main.*
 import mvvm.coding.story_it.R
 import mvvm.coding.story_it.databinding.ActivityMainBinding
+import mvvm.coding.story_it.ui.preferences.PreferencesFragmentDirections
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -27,19 +31,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        supportActionBar?.title = "Story.it"
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-
-        navController.addOnDestinationChangedListener { navController, destination, arguments ->
-            Toast.makeText(this, destination.label, Toast.LENGTH_SHORT).show()
-        }
-
         NavigationUI.setupActionBarWithNavController(this, navController)
-
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment).navigateUp()
+    }
+
+    override fun onBackPressed() {
+        findNavController(R.id.nav_host_fragment).navigate(R.id.startFragment)
     }
 }
